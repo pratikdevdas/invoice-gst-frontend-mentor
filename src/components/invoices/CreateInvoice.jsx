@@ -10,12 +10,10 @@ import AddItem from './AddItem'
 import invoiceSlice from '../../redux/invoiceSlice'
 import {
   validateSenderStreetAddress,
-  validateSenderPostCode,
   validateSenderCity,
   validateCLientEmail,
   validateCLientName,
   validateClientCity,
-  validateClientPostCode,
   validateClientStreetAddress,
   validateItemCount,
   validateItemName,
@@ -163,12 +161,12 @@ function CreateInvoice({
   function validator() {
     if (
       validateSenderStreetAddress(senderStreet)
-      && validateSenderPostCode(senderPostCode)
+      // && validateSenderPostCode(senderPostCode)
       && validateSenderCity(senderCity)
       && validateCLientEmail(clientEmail)
       && validateCLientName(clientName)
       && validateClientCity(clientCity)
-      && validateClientPostCode(clientPostCode)
+      // && validateClientPostCode(clientPostCode)
       && validateClientStreetAddress(clientStreet)
       && validateSenderCountry(senderCountry)
       && validateClientCountry(clientCountry)
@@ -252,11 +250,8 @@ function CreateInvoice({
                 type="text"
                 value={senderPostCode}
                 onChange={(e) => setSenderPostCode(e.target.value)}
-                className={` dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg focus:outline-none  focus:outline-purple-400 border-gray-300 ${
-                  isValidatorActive
-                  && !validateSenderPostCode(senderPostCode)
-                  && 'border-red-500 dark:border-red-500 outline-red-500 border-2'
-                } dark:border-gray-800`}
+                className={` dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg focus:outline-none  focus:outline-purple-400 border-gray-300
+                  dark:border-gray-800`}
               />
             </div>
             <div className=" flex flex-col col-span-1">
@@ -341,12 +336,9 @@ function CreateInvoice({
               <input
                 type="text"
                 value={clientPostCode}
+                required
                 onChange={(e) => setClientPostCode(e.target.value)}
-                className={` dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none ${
-                  isValidatorActive
-                  && !validateClientPostCode(clientPostCode)
-                  && 'border-red-500 dark:border-red-500 outline-red-500 border-2'
-                }   dark:border-gray-800`}
+                className=" dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none  dark:border-gray-800"
               />
             </div>
             <div className=" flex flex-col col-span-1">

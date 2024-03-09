@@ -8,6 +8,7 @@ import plus from '../../assets/plus.png'
 import InvoiceCard from './InvoiceCard'
 import invoiceSlice from '../../redux/invoiceSlice'
 import CreateInvoice from './CreateInvoice'
+import Header from '../Header'
 
 function Center() {
   const location = useLocation()
@@ -58,6 +59,7 @@ function Center() {
 
   return (
     <div>
+      <Header />
       <div className="dark:bg-[#141625] scrollbar-hide duration-300 min-h-screen bg-[#f8f8fb] py-[34px] px-2 md:px-8 lg:px-12 lg:py-[72px]  ">
         <motion.div
           key={location.pathname}

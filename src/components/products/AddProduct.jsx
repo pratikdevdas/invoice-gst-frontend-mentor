@@ -6,12 +6,11 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 // import { useState } from 'react'
 import { motion } from 'framer-motion'
-import {
-  Formik, Form, Field, ErrorMessage,
-} from 'formik'
+import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { useDispatch } from 'react-redux'
 import productSlice from '../../redux/productSlice'
+import { CustomField } from '../utils/Fields'
 // import { v4 as uuidv4 } from 'uuid'
 // import AddItem from '../AddItem'
 // import invoiceSlice from '../../redux/invoiceSlice'
@@ -56,11 +55,11 @@ function AddProduct({ setOpenAddProduct }) {
             description: '',
             specialCode: '',
             sellingPrice: 0,
+            hsnCode: '',
             defaultDiscount: 0,
             cgst: 0,
             igst: 0,
             sgst: 0,
-            hsnCode: '',
             // sku: 0,
           }}
           validationSchema={Yup.object({
@@ -70,6 +69,17 @@ function AddProduct({ setOpenAddProduct }) {
             description: Yup.string()
               .max(20, 'Must be 20 characters or less')
               .required('Required'),
+            specialCode: Yup.string()
+              .max(20, 'Must be 20 characters or less')
+              .required('Required'),
+            hsnCode: Yup.string()
+              .max(20, 'Must be 20 characters or less')
+              .required('Required'),
+            sellingPrice: Yup.number().required('Required'),
+            defaultDiscount: Yup.number('Must be a number'),
+            cgst: Yup.number('Must be a number').required('required'),
+            sgst: Yup.number('Must be a number').required('required'),
+            igst: Yup.number('Must be a number').required('required'),
           })}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
@@ -89,89 +99,43 @@ function AddProduct({ setOpenAddProduct }) {
 
               <div className=" grid grid-cols-3 mx-1   space-y-4 ">
                 <div className=" flex flex-col col-span-3">
-                  <label
-                    htmlFor="productName"
-                    className=" text-gray-400 font-light"
-                  >
-                    Product Name
-                  </label>
-                  <Field
+                  <CustomField
                     type="text"
                     name="productName"
-                    className=" dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none   dark:border-gray-800"
-                  />
-                  <ErrorMessage
-                    name="productName"
-                    className="border-red-500 dark:border-red-500 outline-red-500 border-2"
+                    label="Product Name"
                   />
                 </div>
                 <div className=" flex flex-col col-span-3">
-                  <label
-                    htmlFor="description"
-                    className=" text-gray-400 font-light"
-                  >
-                    Description
-                  </label>
-                  <Field
-                    type="text"
-                    name="description"
-                    className=" dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none   dark:border-gray-800"
-                  />
-                  <ErrorMessage
-                    name="description"
-                    className="border-red-500 dark:border-red-500 outline-red-500 border-2"
-                  />
+                  <div className=" flex flex-col col-span-3">
+                    <CustomField
+                      type="text"
+                      name="description"
+                      label="Description"
+                    />
+                  </div>
                 </div>
-
                 <div className=" flex flex-col mr-4 col-span-1">
-                  <label
-                    htmlFor="specialCode"
-                    className=" text-gray-400 font-light"
-                  >
-                    Special Code (if any)
-                  </label>
-                  <Field
+                  <CustomField
                     type="text"
                     name="specialCode"
-                    className=" dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none   dark:border-gray-800"
-                  />
-                  <ErrorMessage
-                    name="specialCode"
-                    className="border-red-500 mt-4  dark:border-red-500 outline-red-500 border-2"
+                    label="Special Code"
                   />
                 </div>
                 <div className=" flex flex-col mr-4 col-span-1">
-                  <label
-                    htmlFor="sellingPrice"
-                    className=" text-gray-400 font-light"
-                  >
-                    Selling Price (incl. tax)
-                  </label>
-                  <Field
+                  <CustomField type="text" name="hsnCode" label="HSN Code" />
+                </div>
+                <div className=" flex flex-col mr-4 col-span-1">
+                  <CustomField
                     type="number"
                     name="sellingPrice"
-                    className=" dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none   dark:border-gray-800"
-                  />
-                  <ErrorMessage
-                    name="sellingPrice"
-                    className="border-red-500 dark:border-red-500 outline-red-500 border-2"
+                    label="Selling Price (₹)"
                   />
                 </div>
-                <div className=" flex flex-col col-span-1">
-                  <label
-                    htmlFor="defaultDiscount"
-                    className=" text-gray-400 font-light"
-                  >
-                    Default Discount %
-                  </label>
-                  <Field
+                <div className=" flex flex-col mr-4 col-span-1">
+                  <CustomField
                     type="number"
                     name="defaultDiscount"
-                    className=" dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none   dark:border-gray-800"
-                  />
-                  <ErrorMessage
-                    name="defaultDisount"
-                    className="border-red-500 dark:border-red-500 outline-red-500 border-2"
+                    label="Discount %"
                   />
                 </div>
               </div>
@@ -181,55 +145,13 @@ function AddProduct({ setOpenAddProduct }) {
               </h1>
               <div className=" grid mx-1 grid-cols-3 mt-4 ">
                 <div className=" flex flex-col mr-4 col-span-1">
-                  <label
-                    htmlFor="cgst"
-                    className=" text-gray-400 font-light"
-                  >
-                    CGST %
-                  </label>
-                  <Field
-                    type="number"
-                    name="cgst"
-                    className=" dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none   dark:border-gray-800"
-                  />
-                  <ErrorMessage
-                    name="cgst"
-                    className="border-red-500 dark:border-red-500 outline-red-500 border-2"
-                  />
+                  <CustomField type="number" name="cgst" label="CGST %" />
                 </div>
                 <div className=" flex flex-col mr-4 col-span-1">
-                  <label
-                    htmlFor="sgst"
-                    className=" text-gray-400 font-light"
-                  >
-                    SGST %
-                  </label>
-                  <Field
-                    type="number"
-                    name="sgst"
-                    className=" dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none   dark:border-gray-800"
-                  />
-                  <ErrorMessage
-                    name="sgst"
-                    className="border-red-500 dark:border-red-500 outline-red-500 border-2"
-                  />
+                  <CustomField type="number" name="sgst" label="SGST %" />
                 </div>
                 <div className=" flex flex-col mr-4 col-span-1">
-                  <label
-                    htmlFor="igst"
-                    className=" text-gray-400 font-light"
-                  >
-                    IGST %
-                  </label>
-                  <Field
-                    type="number"
-                    name="igst"
-                    className=" dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none   dark:border-gray-800"
-                  />
-                  <ErrorMessage
-                    name="igst"
-                    className="border-red-500 dark:border-red-500 outline-red-500 border-2"
-                  />
+                  <CustomField type="number" name="igst" label="IGST %" />
                 </div>
               </div>
             </div>
@@ -247,7 +169,10 @@ function AddProduct({ setOpenAddProduct }) {
               </div>
 
               <div>
-                <button type="submit" className=" text-white  hover:opacity-80 mx-auto py-4 items-center bg-[#7c5dfa] justify-center  px-8 rounded-full ">
+                <button
+                  type="submit"
+                  className=" text-white  hover:opacity-80 mx-auto py-4 items-center bg-[#7c5dfa] justify-center  px-8 rounded-full "
+                >
                   Save Item
                 </button>
               </div>

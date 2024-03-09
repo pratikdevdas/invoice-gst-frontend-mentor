@@ -33,7 +33,7 @@ function InvoiceInfo({ onDelete }) {
   }, [invoiceId, onMakePaidClick])
 
   const onDeleteButtonClick = () => {
-    navigate('/')
+    navigate('/dashboard')
     setIsDeleteModalOpen(false)
     onDelete(invoiceId)
   }

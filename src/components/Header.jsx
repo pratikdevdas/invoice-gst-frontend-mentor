@@ -86,13 +86,13 @@ function Header() {
             <div className="flex flex-col gap-8">
               <img src={logo} className="relative" alt="logo" />
               {/* <img src={logo} className="relative" alt="logo" /> */}
-              <Link to="/">
+              <Link to="/dashboard">
                 <BanknotesIcon className="w-8 mx-auto text-[#7E88C3]" />
               </Link>
               <Link to="/stats">
                 <ChartBarIcon className="w-8 mx-auto text-[#7E88C3]" />
               </Link>
-              <Link to="/products">
+              <Link to="/dashboard/products">
                 <RectangleGroupIcon className="w-8 mx-auto text-[#7E88C3]" />
               </Link>
             </div>
