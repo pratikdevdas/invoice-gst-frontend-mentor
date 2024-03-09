@@ -26,7 +26,7 @@ function ProductCard({ product }) {
         <div className="  flex  items-center ">
 
           <h1 className=" text-xl mr-8  dark:text-white">
-            £
+            ₹
             {' '}
             {product.sellingPrice}
           </h1>
@@ -56,7 +56,7 @@ function ProductCard({ product }) {
             {product.productName}
           </h2>
           <h1 className=" text-xl  dark:text-white">
-            £
+            ₹
             {' '}
             {product.sellingPrice}
           </h1>

@@ -162,7 +162,7 @@ function InvoiceInfo({ onDelete }) {
                   <div className=" justify-between text-lg dark:text-white flex">
                     <h1>{item.name}</h1>
                     <h1>
-                      £
+                      ₹
                       {item.total}
                     </h1>
                   </div>
@@ -190,7 +190,7 @@ function InvoiceInfo({ onDelete }) {
                       <p className=" text-gray-400 font-thin">Item price</p>
 
                       <h1 className=" dark:text-white text-base font-semibold">
-                        £
+                        ₹
                         {item.price}
                       </h1>
                     </div>
@@ -198,7 +198,7 @@ function InvoiceInfo({ onDelete }) {
                       <p className=" text-gray-400 font-thin">Total</p>
 
                       <h1 className=" dark:text-white text-base font-semibold">
-                        £
+                        ₹
                         {item.total}
                       </h1>
                     </div>
@@ -209,7 +209,7 @@ function InvoiceInfo({ onDelete }) {
                 <h3 className=" text-xl ">Amount Due</h3>
 
                 <h1 className=" text-3xl">
-                  £
+                  ₹
                   {invoice.total}
                 </h1>
               </div>
