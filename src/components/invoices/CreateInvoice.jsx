@@ -285,13 +285,6 @@ function CreateInvoice({
                   Invoice Details
                 </h1>
                 <div className=" grid mx-1 grid-cols-2 gap-4 mt-2 ">
-                  <div className=" flex flex-col col-span-2 ">
-                    <CustomField
-                      type="date"
-                      name="invoiceDate"
-                      label="Invoice Date"
-                    />
-                  </div>
                   <div className=" flex flex-col col-span-2">
                     <CustomField
                       type="date"

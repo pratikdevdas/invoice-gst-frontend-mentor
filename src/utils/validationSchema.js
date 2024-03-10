@@ -34,23 +34,8 @@ export const invoiceValidation = Yup.object({
     .required('Required'),
   clientCity: Yup.string().required('Required'),
   clientPostCode: Yup.number().required('Required'),
-  invoiceDate: Yup.date().min(new Date(), 'Please choose future date'),
   deliveryDate: Yup.date().min(new Date(), 'Please choose future date'),
   otherDetails: Yup.string(),
   advancePayment: Yup.number(),
   discount: Yup.number(),
-  //   Yup
-  //     .date()
-  //     .when(
-  //       'invoiceDate',
-  //       (invoiceDate, schema) => {
-  //         if (invoiceDate) {
-  //           const dayAfter = new Date(invoiceDate.getTime() + 86400000)
-
-  //           return schema.min(dayAfter, 'Delivery date has to be greater than invoice date')
-  //         }
-
-//         return schema
-//       },
-//     ),
 })
