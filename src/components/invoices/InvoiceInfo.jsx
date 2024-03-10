@@ -142,13 +142,22 @@ function InvoiceInfo({ onDelete }) {
                 </div>
 
                 <div className=" mt-8 md:mt-0">
-                  <p className=" text-gray-400 font-thin">Sent to</p>
+                  <p className=" text-gray-400 font-thin">Send to</p>
                   <h1 className=" dark:text-white text-lg font-semibold">
                     {invoice.clientEmail}
                     {' '}
                     <br />
                     {invoice.clientPhone}
                   </h1>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      console.log('send invoic')
+                    }}
+                    className=" text-center  text-white bg-[#7c5dfa] hover:opacity-80 p-1 px-2 rounded-md"
+                  >
+                    Send Invoice
+                  </button>
                 </div>
               </div>
 

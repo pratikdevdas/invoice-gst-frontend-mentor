@@ -18,9 +18,9 @@ function InvoiceCard({ invoice }) {
           </h2>
 
           <h2 className=" text-sm text-gray-400 font-light ml-6">
-            Due
+            Delivery
             {' '}
-            {invoice.paymentDue}
+            {invoice.deliveryDate}
           </h2>
 
           <h2 className=" text-sm text-gray-400 font-light ml-10">

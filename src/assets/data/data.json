@@ -1,231 +1,272 @@
 [
   {
-    "id": "RT3080",
-    "createdAt": "2021-8-18",
-    "paymentDue": "2021-8-19",
-    "description": "Re-branding",
-    "paymentTerms": 1,
-    "clientName": "Jensen Huang",
-    "clientEmail": "jensenh@mail.com",
-    "status": "paid",
-    "senderAddress": {
-      "street": "19 Union Terrace",
-      "city": "London",
-      "postCode": "E1 3EZ",
-      "country": "United Kingdom"
-    },
-    "clientAddress": {
-      "street": "106 Kendell Street",
-      "city": "Sharrington",
-      "postCode": "NR24 5WQ",
-      "country": "United Kingdom"
-    },
-    "items": [
-      {
-        "name": "Brand Guidelines",
-        "quantity": 1,
-        "price": 1800.90,
-        "total": 1800.90
-      }
-    ],
-    "total": 1800.90
-  },
-  {
-    "id": "XM9141",
-    "createdAt": "2021-8-21",
-    "paymentDue": "2021-9-20",
-    "description": "Graphic Design",
-    "paymentTerms": 30,
-    "clientName": "Alex Grim",
-    "clientEmail": "alexgrim@mail.com",
+    "id": "ABC123",
+    "createdAt": "2024-03-15",
+    "deliveryDate": "2024-03-20",
+    "invoiceDate": "2024-03-15",
+    "clientName": "John Doe",
+    "clientEmail": "john.doe@example.com",
+    "clientPhone": 1234567890,
     "status": "pending",
-    "senderAddress": {
-      "street": "19 Union Terrace",
-      "city": "London",
-      "postCode": "E1 3EZ",
-      "country": "United Kingdom"
+    "vendorDetails": {
+      "name": "Fashion Hub",
+      "outlet": "City Center",
+      "postCode": 567890
     },
     "clientAddress": {
-      "street": "84 Church Way",
-      "city": "Bradford",
-      "postCode": "BD1 9PB",
-      "country": "United Kingdom"
+      "street": "Main Street",
+      "postCode": 567890,
+      "city": "Metropolis"
     },
     "items": [
       {
-        "name": "Banner Design",
-        "quantity": 1,
-        "price": 156.00,
-        "total": 156.00
-      },
-      {
-        "name": "Email Design",
+        "name": "Designer Watch",
         "quantity": 2,
-        "price": 200.00,
-        "total": 400.00
-      }
-    ],
-    "total": 556.00
-  },
-  {
-    "id": "RG0314",
-    "createdAt": "2021-9-24",
-    "paymentDue": "2021-10-01",
-    "description": "Website Redesign",
-    "paymentTerms": 7,
-    "clientName": "John Morrison",
-    "clientEmail": "jm@myco.com",
-    "status": "paid",
-    "senderAddress": {
-      "street": "19 Union Terrace",
-      "city": "London",
-      "postCode": "E1 3EZ",
-      "country": "United Kingdom"
-    },
-    "clientAddress": {
-      "street": "79 Dover Road",
-      "city": "Westhall",
-      "postCode": "IP19 3PF",
-      "country": "United Kingdom"
-    },
-    "items": [
-      {
-        "name": "Website Redesign",
-        "quantity": 1,
-        "price": 14002.33,
-        "total": 14002.33
-      }
-    ],
-    "total": 14002.33
-  },
-  {
-    "id": "RT2080",
-    "createdAt": "2021-10-11",
-    "paymentDue": "2021-10-12",
-    "description": "Logo Concept",
-    "paymentTerms": 1,
-    "clientName": "Alysa Werner",
-    "clientEmail": "alysa@email.co.uk",
-    "status": "pending",
-    "senderAddress": {
-      "street": "19 Union Terrace",
-      "city": "London",
-      "postCode": "E1 3EZ",
-      "country": "United Kingdom"
-    },
-    "clientAddress": {
-      "street": "63 Warwick Road",
-      "city": "Carlisle",
-      "postCode": "CA20 2TG",
-      "country": "United Kingdom"
-    },
-    "items": [
-      {
-        "name": "Logo Sketches",
-        "quantity": 1,
-        "price": 102.04,
-        "total": 102.04
-      }
-    ],
-    "total": 102.04
-  },
-  {
-    "id": "AA1449",
-    "createdAt": "2021-10-7",
-    "paymentDue": "2021-10-14",
-    "description": "Re-branding",
-    "paymentTerms": 7,
-    "clientName": "Mellisa Clarke",
-    "clientEmail": "mellisa.clarke@example.com",
-    "status": "pending",
-    "senderAddress": {
-      "street": "19 Union Terrace",
-      "city": "London",
-      "postCode": "E1 3EZ",
-      "country": "United Kingdom"
-    },
-    "clientAddress": {
-      "street": "46 Abbey Row",
-      "city": "Cambridge",
-      "postCode": "CB5 6EG",
-      "country": "United Kingdom"
-    },
-    "items": [
-      {
-        "name": "New Logo",
-        "quantity": 1,
-        "price": 1532.33,
-        "total": 1532.33
+        "price": 1500,
+        "total": 3000,
+        "id": "98765abc-1234-5678-defg-098765432112",
+        "gst": 12,
+        "specialCode": "W123"
       },
       {
-        "name": "Brand Guidelines",
+        "name": "Leather Bag",
         "quantity": 1,
-        "price": 2500.00,
-        "total": 2500.00
+        "price": 2500,
+        "total": 2500,
+        "id": "12345def-5678-abcd-5678-abcdef987654",
+        "gst": 18,
+        "specialCode": "B456"
       }
     ],
-    "total": 4032.33
+    "total": 5500,
+    "amountPaid": 1000,
+    "leftToPay": 4500,
+    "otherDetails": "Additional details for Invoice ABC123",
+    "discount": 300
   },
   {
-    "id": "TY9141",
-    "createdAt": "2021-10-01",
-    "paymentDue": "2021-10-31",
-    "description": "Landing Page Design",
-    "paymentTerms": 30,
-    "clientName": "Thomas Wayne",
-    "clientEmail": "thomas@dc.com",
+    "id": "XYZ789",
+    "createdAt": "2024-03-12",
+    "deliveryDate": "2024-03-18",
+    "invoiceDate": "2024-03-12",
+    "clientName": "Alice Johnson",
+    "clientEmail": "alice.johnson@example.com",
+    "clientPhone": 9876543210,
+    "status": "paid",
+    "vendorDetails": {
+      "name": "Tech Paradise",
+      "outlet": "Electro Zone",
+      "postCode": 456789
+    },
+    "clientAddress": {
+      "street": "Tech Street",
+      "postCode": 456789,
+      "city": "Tech City"
+    },
+    "items": [
+      {
+        "name": "Smartphone",
+        "quantity": 1,
+        "price": 800,
+        "total": 800,
+        "id": "abcd1234-5678-efgh-5678-ijklmnopqrst",
+        "gst": 10,
+        "specialCode": "S789"
+      },
+      {
+        "name": "Laptop",
+        "quantity": 1,
+        "price": 2000,
+        "total": 2000,
+        "id": "efgh5678-ijkl-1234-mnop-qrstabcd5678",
+        "gst": 15,
+        "specialCode": "L012"
+      }
+    ],
+    "total": 2800,
+    "amountPaid": 2800,
+    "leftToPay": 0,
+    "otherDetails": "Details for Invoice XYZ789",
+    "discount": 0
+  },
+  {
+    "id": "PQR456",
+    "createdAt": "2024-03-18",
+    "deliveryDate": "2024-03-24",
+    "invoiceDate": "2024-03-18",
+    "clientName": "Emily Brown",
+    "clientEmail": "emily.brown@example.com",
+    "clientPhone": 7890123456,
     "status": "pending",
-    "senderAddress": {
-      "street": "19 Union Terrace",
-      "city": "London",
-      "postCode": "E1 3EZ",
-      "country": "United Kingdom"
+    "vendorDetails": {
+      "name": "Home Essentials",
+      "outlet": "Furniture Emporium",
+      "postCode": 678901
     },
     "clientAddress": {
-      "street": "3964  Queens Lane",
-      "city": "Gotham",
-      "postCode": "60457",
-      "country": "United States of America"
+      "street": "Comfort Lane",
+      "postCode": 678901,
+      "city": "Cozy Town"
     },
     "items": [
       {
-        "name": "Web Design",
+        "name": "Sofa Set",
         "quantity": 1,
-        "price": 6155.91,
-        "total": 6155.91
+        "price": 3500,
+        "total": 3500,
+        "id": "ijklmnopqrst-7890-abcd-ijkl-mnopqrstabcd",
+        "gst": 12,
+        "specialCode": "SF456"
+      },
+      {
+        "name": "Coffee Table",
+        "quantity": 2,
+        "price": 1000,
+        "total": 2000,
+        "id": "7890abcd-ijklmnopqrst-abcd-ijklmnopqrst",
+        "gst": 18,
+        "specialCode": "CT789"
       }
     ],
-    "total": 6155.91
+    "total": 5500,
+    "amountPaid": 1500,
+    "leftToPay": 4000,
+    "otherDetails": "Additional details for Invoice PQR456",
+    "discount": 300
   },
   {
-    "id": "FV2353",
-    "createdAt": "2021-11-05",
-    "paymentDue": "2021-11-12",
-    "description": "Logo Re-design",
-    "paymentTerms": 7,
-    "clientName": "Anita Wainwright",
-    "clientEmail": "",
-    "status": "draft",
-    "senderAddress": {
-      "street": "19 Union Terrace",
-      "city": "London",
-      "postCode": "E1 3EZ",
-      "country": "United Kingdom"
+    "id": "DEF456",
+    "createdAt": "2024-03-20",
+    "deliveryDate": "2024-03-25",
+    "invoiceDate": "2024-03-20",
+    "clientName": "Michael Smith",
+    "clientEmail": "michael.smith@example.com",
+    "clientPhone": 6543210987,
+    "status": "pending",
+    "vendorDetails": {
+      "name": "Sports Galaxy",
+      "outlet": "Fitness Arena",
+      "postCode": 789012
     },
     "clientAddress": {
-      "street": "",
-      "city": "",
-      "postCode": "",
-      "country": ""
+      "street": "Active Street",
+      "postCode": 789012,
+      "city": "Fit City"
     },
     "items": [
       {
-        "name": "Logo Re-design",
+        "name": "Running Shoes",
+        "quantity": 2,
+        "price": 1200,
+        "total": 2400,
+        "id": "mnopqrstabcd-9876-ijkl-mnopqrstabcd-ijkl",
+        "gst": 15,
+        "specialCode": "RS123"
+      },
+      {
+        "name": "Fitness Tracker",
         "quantity": 1,
-        "price": 3102.04,
-        "total": 3102.04
+        "price": 800,
+        "total": 800,
+        "id": "qrstabcd-ijklmnop-9876-ijklmnop-qrst",
+        "gst": 10,
+        "specialCode": "FT456"
       }
     ],
-    "total": 3102.04
+    "total": 3200,
+    "amountPaid": 800,
+    "leftToPay": 2400,
+    "otherDetails": "Details for Invoice DEF456",
+    "discount": 200
+  },
+  {
+    "id": "GHI789",
+    "createdAt": "2024-03-22",
+    "deliveryDate": "2024-03-28",
+    "invoiceDate": "2024-03-22",
+    "clientName": "Sophie Turner",
+    "clientEmail": "sophie.turner@example.com",
+    "clientPhone": 8765432109,
+    "status": "paid",
+    "vendorDetails": {
+      "name": "Gourmet Delights",
+      "outlet": "Culinary Corner",
+      "postCode": 890123
+    },
+    "clientAddress": {
+      "street": "Tasty Avenue",
+      "postCode": 890123,
+      "city": "Foodville"
+    },
+    "items": [
+      {
+        "name": "Chef's Knife Set",
+        "quantity": 1,
+        "price": 1800,
+        "total": 1800,
+        "id": "uvwxyzabcd-5678-ijklmnop-uvwxyzabcd-ijkl",
+        "gst": 12,
+        "specialCode": "CKS789"
+      },
+      {
+        "name": "Premium Olive Oil",
+        "quantity": 3,
+        "price": 500,
+        "total": 1500,
+        "id": "abcd-ijklmnop-5678-ijklmnop-uvwxyz",
+        "gst": 5,
+        "specialCode": "POO123"
+      }
+    ],
+    "total": 3300,
+    "amountPaid": 3300,
+    "leftToPay": 0,
+    "otherDetails": "Details for Invoice GHI789",
+    "discount": 0
+  },
+  {
+    "id": "JKL012",
+    "createdAt": "2024-03-25",
+    "deliveryDate": "2024-03-30",
+    "invoiceDate": "2024-03-25",
+    "clientName": "David Williams",
+    "clientEmail": "david.williams@example.com",
+    "clientPhone": 7654321098,
+    "status": "pending",
+    "vendorDetails": {
+      "name": "Book Haven",
+      "outlet": "Literary Lounge",
+      "postCode": 901234
+    },
+    "clientAddress": {
+      "street": "Novel Street",
+      "postCode": 901234,
+      "city": "Booktown"
+    },
+    "items": [
+      {
+        "name": "Classic Novels Collection",
+        "quantity": 1,
+        "price": 2500,
+        "total": 2500,
+        "id": "ijklmnop-qrst-5678-qrst-ijklmnopabcd",
+        "gst": 8,
+        "specialCode": "CNC456"
+      },
+      {
+        "name": "Reading Glasses",
+        "quantity": 2,
+        "price": 300,
+        "total": 600,
+        "id": "mnop-qrst-ijklmnopabcd-5678-qrst",
+        "gst": 5,
+        "specialCode": "RG789"
+      }
+    ],
+    "total": 3100,
+    "amountPaid": 1000,
+    "leftToPay": 2100,
+    "otherDetails": "Details for Invoice JKL012",
+    "discount": 400
   }
 ]
