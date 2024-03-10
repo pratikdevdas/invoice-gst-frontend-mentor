@@ -18,7 +18,6 @@ function AddItem({
   const [value, setValue] = useState('')
   const [quantity, setQuantity] = useState(0)
   // let product
-  console.log(quantity)
   return (
     <div>
       <div className=" flex dark:text-white justify-between items-center">

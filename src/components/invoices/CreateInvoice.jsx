@@ -2,64 +2,35 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+// /* eslint-disable */
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { v4 as uuidv4 } from 'uuid'
 import { useDispatch } from 'react-redux'
+import { Formik, Form, Field } from 'formik'
 import AddItem from './AddItem'
 import invoiceSlice from '../../redux/invoiceSlice'
-import {
-  validateSenderStreetAddress,
-  validateSenderCity,
-  validateCLientEmail,
-  validateCLientName,
-  validateClientCity,
-  validateClientStreetAddress,
-  validateItemCount,
-  validateItemName,
-  validateItemPrice,
-  validateSenderCountry,
-  validateClientCountry,
-} from '../../functions/createInvoiceValidator'
+import { CustomField } from '../utils/Fields'
+// import {
+//   validateItemCount,
+//   validateItemName,
+//   validateItemPrice,
+// } from '../../functions/createInvoiceValidator'
+import { invoiceValidation } from '../../utils/validationSchema'
 
 function CreateInvoice({
   // openCreateInvoice,
   setOpenCreateInvoice,
-  invoice,
+  // invoice,
   type,
 }) {
   const dispatch = useDispatch()
 
-  const [isFirstLoad, setIsFirstLoad] = useState(true)
-  const [isValidatorActive, setIsValidatorActive] = useState(false)
+  // const [isFirstLoad, setIsFirstLoad] = useState(true)
+  // const [isValidatorActive, setIsValidatorActive] = useState(false)
   // const [isValid, setIsValid] = useState(true)
 
-  const [filterValue] = useState('')
-  const deliveryTimes = [
-    { text: 'Next 1 day', value: 1 },
-    { text: 'Next 7 day', value: 7 },
-    { text: 'Next 14 day', value: 14 },
-    { text: 'Next 30 day', value: 30 },
-  ]
-  const [senderStreet, setSenderStreet] = useState('')
-  const [senderCity, setSenderCity] = useState('')
-  const [senderPostCode, setSenderPostCode] = useState('')
-  const [senderCountry, setSenderCountry] = useState('')
-
-  const [clientName, setClientName] = useState('')
-  const [clientEmail, setClientEmail] = useState('')
-
-  const [clientStreet, setClientStreet] = useState('')
-  const [clientCity, setClientCity] = useState('')
-  const [clientPostCode, setClientPostCode] = useState('')
-  const [clientCountry, setClientCountry] = useState('')
-  const [description, setDescription] = useState('')
-
-  const [selectDeliveryDate, setSelectDeliveryDate] = useState('')
-  const [paymentTerms, setpaymentTerms] = useState(deliveryTimes[0].value)
-
   const [item, setItem] = useState([])
-  console.log(item)
   const onDelete = (id) => {
     setItem((pervState) => pervState.filter((el) => el.id !== id))
   }
@@ -67,7 +38,6 @@ function CreateInvoice({
   const handelOnChange = (id, e) => {
     const data = [...item]
 
-    console.log(e)
     const foundData = data.find((el) => el.id === id)
 
     if (e.target.name === 'quantity') {
@@ -82,100 +52,81 @@ function CreateInvoice({
     setItem(data)
   }
 
-  const onSubmit = () => {
-    if (type === 'edit') {
-      dispatch(
-        invoiceSlice.actions.editInvoice({
-          description,
-          paymentTerms,
-          clientName,
-          clientEmail,
-          senderStreet,
-          senderCity,
-          senderPostCode,
-          senderCountry,
-          clientStreet,
-          clientCity,
-          clientPostCode,
-          clientCountry,
-          item,
-          id: invoice.id,
-        }),
-      )
-      setOpenCreateInvoice(false)
-    } else {
-      dispatch(
-        invoiceSlice.actions.addInvoice({
-          description,
-          paymentTerms,
-          clientName,
-          clientEmail,
-          senderStreet,
-          senderCity,
-          senderPostCode,
-          senderCountry,
-          clientStreet,
-          clientCity,
-          clientPostCode,
-          clientCountry,
-          item,
-        }),
-      )
-      dispatch(invoiceSlice.actions.filterInvoice({ status: filterValue }))
-    }
-  }
+  // const onSubmit = () => {
+  //   if (type === 'edit') {
+  //     dispatch(
+  //       invoiceSlice.actions.editInvoice({
+  //         description,
+  //         paymentTerms,
+  //         clientName,
+  //         clientEmail,
+  //         senderStreet,
+  //         senderCity,
+  //         senderPostCode,
+  //         senderCountry,
+  //         clientStreet,
+  //         clientCity,
+  //         clientPostCode,
+  //         clientCountry,
+  //         item,
+  //         id: invoice.id,
+  //       }),
+  //     )
+  //     setOpenCreateInvoice(false)
+  //   } else {
+  //     dispatch(
+  //       invoiceSlice.actions.addInvoice({
+  //         description,
+  //         paymentTerms,
+  //         clientName,
+  //         clientEmail,
+  //         senderStreet,
+  //         senderCity,
+  //         senderPostCode,
+  //         senderCountry,
+  //         clientStreet,
+  //         clientCity,
+  //         clientPostCode,
+  //         clientCountry,
+  //         item,
+  //       }),
+  //     )
+  //     dispatch(invoiceSlice.actions.filterInvoice({ status: filterValue }))
+  //   }
+  // }
 
-  if (type === 'edit' && isFirstLoad) {
-    const updatedItemsArray = invoice.items.map((obj, index) => ({
-      ...obj,
-      id: index + 1,
-    }))
+  // if (type === 'edit' && isFirstLoad) {
+  //   const updatedItemsArray = invoice.items.map((obj, index) => ({
+  //     ...obj,
+  //     id: index + 1,
+  //   }))
 
-    setClientName(invoice.clientName)
-    setClientCity(invoice.clientAddress.city)
-    setClientStreet(invoice.clientAddress.street)
-    setClientPostCode(invoice.clientAddress.postCode)
-    setClientCountry(invoice.clientAddress.country)
-    setClientEmail(invoice.clientEmail)
-    setpaymentTerms(invoice.paymentTerms)
-    setDescription(invoice.description)
-    setSenderCity(invoice.senderAddress.city)
-    setSenderStreet(invoice.senderAddress.street)
-    setSenderCountry(invoice.senderAddress.country)
-    setSenderPostCode(invoice.senderAddress.postCode)
-    setItem(updatedItemsArray)
+  //   setClientName(invoice.clientName)
+  //   setClientCity(invoice.clientAddress.city)
+  //   setClientStreet(invoice.clientAddress.street)
+  //   setClientPostCode(invoice.clientAddress.postCode)
+  //   setClientCountry(invoice.clientAddress.country)
+  //   setClientEmail(invoice.clientEmail)
+  //   setpaymentTerms(invoice.paymentTerms)
+  //   setDescription(invoice.description)
+  //   setSenderCity(invoice.senderAddress.city)
+  //   setSenderStreet(invoice.senderAddress.street)
+  //   setSenderCountry(invoice.senderAddress.country)
+  //   setSenderPostCode(invoice.senderAddress.postCode)
+  //   setItem(updatedItemsArray)
 
-    setIsFirstLoad(false)
-  }
+  //   setIsFirstLoad(false)
+  // }
 
-  function itemsValidator() {
-    const itemName = item.map((i) => validateItemName(i.name))
-    const itemCount = item.map((i) => validateItemCount(i.quantity))
-    const itemPrice = item.map((i) => validateItemPrice(i.price))
+  // function itemsValidator() {
+  //   const itemName = item.map((i) => validateItemName(i.name))
+  //   const itemCount = item.map((i) => validateItemCount(i.quantity))
+  //   const itemPrice = item.map((i) => validateItemPrice(i.price))
 
-    const allItemsElement = itemCount.concat(itemPrice, itemName)
+  //   const allItemsElement = itemCount.concat(itemPrice, itemName)
 
-    return allItemsElement.includes(false) !== true
-  }
-
-  function validator() {
-    if (
-      validateSenderStreetAddress(senderStreet)
-      // && validateSenderPostCode(senderPostCode)
-      && validateSenderCity(senderCity)
-      && validateCLientEmail(clientEmail)
-      && validateCLientName(clientName)
-      && validateClientCity(clientCity)
-      // && validateClientPostCode(clientPostCode)
-      && validateClientStreetAddress(clientStreet)
-      && validateSenderCountry(senderCountry)
-      && validateClientCountry(clientCountry)
-      && itemsValidator()
-    ) {
-      return true
-    }
-    return false
-  }
+  //   return allItemsElement.includes(false) !== true
+  // }
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
@@ -209,250 +160,227 @@ function CreateInvoice({
           {' '}
           Invoice
         </h1>
-
-        <div className=" overflow-y-scroll scrollbar-hide my-14">
-          <h1 className=" text-[#7c5dfa] mb-4 font-medium">Bill From</h1>
-
-          <div className=" grid grid-cols-3 mx-1  space-y-4 ">
-            <div className=" flex flex-col col-span-3">
-              <label className=" text-gray-400 font-light">
-                Street Address
-              </label>
-              <input
-                value="asian optics"
-                id="senderStreet"
-                onChange={(e) => setSenderStreet(e.target.value)}
-                type="text"
-                className={`dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none  dark:border-gray-800 ${
-                  isValidatorActive
-                  && !validateSenderStreetAddress(senderStreet)
-                  && ' border-red-500 dark:border-red-500 outline-red-500 border-2'
-                }`}
-              />
-            </div>
-
-            <div className=" flex flex-col mr-4 col-span-1">
-              <label className=" text-gray-400 font-light">City</label>
-              <input
-                type="text"
-                value={senderCity}
-                onChange={(e) => setSenderCity(e.target.value)}
-                className={`dark:bg-[#1e2139] py-2 px-4 border-[.2px] focus:outline-none  rounded-lg  focus:outline-purple-400 border-gray-300 ${
-                  isValidatorActive
-                  && !validateSenderCity(senderCity)
-                  && 'border-red-500 dark:border-red-500 outline-red-500 border-2'
-                } dark:border-gray-800`}
-              />
-            </div>
-            <div className=" flex flex-col mr-4 col-span-1">
-              <label className=" text-gray-400 font-light">Post Code</label>
-              <input
-                type="text"
-                value={senderPostCode}
-                onChange={(e) => setSenderPostCode(e.target.value)}
-                className={` dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg focus:outline-none  focus:outline-purple-400 border-gray-300
-                  dark:border-gray-800`}
-              />
-            </div>
-            <div className=" flex flex-col col-span-1">
-              <label className=" text-gray-400 font-light">Country</label>
-              <input
-                type="text"
-                value={senderCountry}
-                onChange={(e) => setSenderCountry(e.target.value)}
-                className={` dark:bg-[#1e2139] py-2 px-4 border-[.2px] focus:outline-none  rounded-lg  focus:outline-purple-400 ${
-                  isValidatorActive
-                  && !validateSenderCountry(senderCountry)
-                  && 'border-red-500 dark:border-red-500 outline-red-500 border-2'
-                } border-gray-300 dark:border-gray-800`}
-              />
-            </div>
-          </div>
-
-          {/* Bill to Section */}
-
-          <h1 className=" text-[#7c5dfa] my-4 mt-10 font-medium">Bill To</h1>
-
-          <div className=" grid grid-cols-3 mx-1   space-y-4 ">
-            <div className=" flex flex-col col-span-3">
-              <label className=" text-gray-400 font-light">Client Name</label>
-              <input
-                type="text"
-                value={clientName}
-                onChange={(e) => setClientName(e.target.value)}
-                className={` dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none ${
-                  isValidatorActive
-                  && !validateCLientName(clientName)
-                  && 'border-red-500 dark:border-red-500 outline-red-500 border-2'
-                }   dark:border-gray-800`}
-              />
-            </div>
-
-            <div className=" flex flex-col   col-span-3">
-              <label className=" text-gray-400 font-light">Client Email</label>
-              <input
-                type="text"
-                value={clientEmail}
-                onChange={(e) => setClientEmail(e.target.value)}
-                className={` dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none ${
-                  isValidatorActive
-                  && !validateCLientEmail(clientEmail)
-                  && 'border-red-500 dark:border-red-500 outline-red-500 border-2'
-                }   dark:border-gray-800`}
-              />
-            </div>
-
-            <div className=" flex flex-col col-span-3">
-              <label className=" text-gray-400 font-light">
-                Street Address
-              </label>
-              <input
-                type="text"
-                value={clientStreet}
-                onChange={(e) => setClientStreet(e.target.value)}
-                className={` dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none ${
-                  isValidatorActive
-                  && !validateClientStreetAddress(clientStreet)
-                  && 'border-red-500 dark:border-red-500 outline-red-500 border-2'
-                }   dark:border-gray-800`}
-              />
-            </div>
-
-            <div className=" flex flex-col mr-4 col-span-1">
-              <label className=" text-gray-400 font-light">City</label>
-              <input
-                type="text"
-                value={clientCity}
-                onChange={(e) => setClientCity(e.target.value)}
-                className={` dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none ${
-                  isValidatorActive
-                  && !validateClientCity(clientCity)
-                  && 'border-red-500 dark:border-red-500 outline-red-500 border-2'
-                }   dark:border-gray-800`}
-              />
-            </div>
-            <div className=" flex flex-col mr-4 col-span-1">
-              <label className=" text-gray-400 font-light">Post Code</label>
-              <input
-                type="text"
-                value={clientPostCode}
-                required
-                onChange={(e) => setClientPostCode(e.target.value)}
-                className=" dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none  dark:border-gray-800"
-              />
-            </div>
-            <div className=" flex flex-col col-span-1">
-              <label className=" text-gray-400 font-light">Country</label>
-              <input
-                type="text"
-                value={clientCountry}
-                onChange={(e) => setClientCountry(e.target.value)}
-                className={` dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none ${
-                  isValidatorActive
-                  && !validateClientCountry(clientCountry)
-                  && 'border-red-500 dark:border-red-500 outline-red-500 border-2'
-                }   dark:border-gray-800`}
-              />
-            </div>
-          </div>
-
-          <div className=" grid mx-1 grid-cols-2 mt-8 ">
-            <div className=" flex flex-col ">
-              <label className=" text-gray-400 font-light">Invoice Date</label>
-              <input
-                type="date"
-                value={selectDeliveryDate}
-                onChange={(e) => setSelectDeliveryDate(e.target.value)}
-                className=" dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none  dark:border-gray-800 dark:text-white  mr-4"
-              />
-            </div>
-
-            <div className=" mx-auto w-full">
-              <label className=" text-gray-400 font-light">Payment Terms</label>
-              <select
-                value={paymentTerms}
-                onChange={(e) => setpaymentTerms(e.target.value)}
-                className=" appearance-none w-full py-2 px-4 border-[.2px] rounded-lg focus:outline-none  dark:bg-[#1e2139] dark:text-white dark:border-gray-800  focus:outline-purple-400 border-gray-300 select-status"
-              >
-                {deliveryTimes.map((time) => (
-                  <option value={time.value}>{time.text}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className=" mx-1 mt-4 flex flex-col ">
-            <label className=" text-gray-400 font-light">Description</label>
-            <input
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              type="text"
-              className=" dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg focus:outline-none   focus:outline-purple-400 border-gray-300 dark:border-gray-800 dark:text-white"
-            />
-          </div>
-
-          {/* Item List Section */}
-
-          <h2 className=" text-2xl text-gray-500 mt-10 ">Item List</h2>
-          {item.map((itemDetails, index) => (
-            <div className=" border-b pb-2 border-gray-300 mb-4 ">
-              <AddItem
-                isValidatorActive={isValidatorActive}
-                key={index}
-                handelOnChange={handelOnChange}
-                setItem={setItem}
-                onDelete={onDelete}
-                itemDetails={itemDetails}
-              />
-            </div>
-          ))}
-
-          <button
-            onClick={() => {
-              setItem((state) => [
-                ...state,
-                {
-                  name: '',
-                  quantity: 1,
-                  price: 0,
-                  total: 0,
-                  id: uuidv4(),
-                },
-              ])
+        <div className="overflow-y-auto scrollbar-hide">
+          <Formik
+            initialValues={{
+              vendorName: 'Asian Optics',
+              outlet: 'Golmuri',
+              vendorPostCode: '831009',
+              clientName: '',
+              clientEmail: '',
+              clientPhone: '',
+              clientAddress: '',
+              clientCity: '',
+              clientPostCode: '',
+              invoiceDate: '',
+              deliveryDate: '',
+              otherDetails: '',
+              advancePayment: 0,
+              discount: 0,
             }}
-            className=" bg-gray-200  hover:opacity-80 mx-auto py-2 items-center dark:text-white dark:bg-[#252945] justify-center rounded-xl  w-full mt-6"
-          >
-            + Add New Item
-          </button>
-        </div>
+            validationSchema={invoiceValidation}
+            onSubmit={(values, { setSubmitting }) => {
+              console.log(values, 'submitted')
+              setTimeout(() => {
+                alert(values)
+                dispatch(invoiceSlice.actions.addInvoice({ ...values, item }))
+                dispatch(
+                  invoiceSlice.actions.filterInvoice({ status: '' }),
+                )
 
-        <div className=" flex  justify-between">
-          <div>
-            <button
-              onClick={() => {
+                console.log(values, 'submitted')
                 setOpenCreateInvoice(false)
-              }}
-              className=" bg-gray-200  hover:opacity-80 mx-auto py-4 items-center dark:text-white  dark:bg-[#252945] justify-center  px-8 rounded-full "
-            >
-              Discard
-            </button>
-          </div>
+                setSubmitting(false)
+              }, 400)
+            }}
+          >
+            <Form>
+              <div className=" overflow-y-scroll scrollbar-hide my-14">
+                <h1 className=" text-[#7c5dfa] mb-4 font-medium">Bill From</h1>
 
-          <div>
-            <button
-              className=" text-white  hover:opacity-80 mx-auto py-4 items-center bg-[#7c5dfa] justify-center  px-8 rounded-full "
-              onClick={() => {
-                const isValid = validator()
-                setIsValidatorActive(true)
-                if (isValid) {
-                  onSubmit()
-                  setOpenCreateInvoice(false)
-                }
-              }}
-            >
-              Save & Send
-            </button>
-          </div>
+                <div className=" grid grid-cols-3 mx-1 gap-x-4  space-y-4 ">
+                  <div className=" flex flex-col col-span-3">
+                    <label className=" text-gray-400 font-light">
+                      Vendor Name
+                    </label>
+                    <Field
+                      name="vendorName"
+                      type="text"
+                      className="dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg border-gray-300 focus:outline-none  dark:border-gray-800"
+                    />
+                  </div>
+
+                  <div className=" flex flex-col col-span-1">
+                    <label className=" text-gray-400 font-light">Outlet</label>
+                    <Field
+                      type="text"
+                      name="outlet"
+                      className="dark:bg-[#1e2139] py-2 px-4 border-[.2px]  rounded-lg   border-gray-300 dark:border-gray-800"
+                    />
+                  </div>
+                  <div className=" flex flex-col col-span-1">
+                    <CustomField
+                      type="number"
+                      name="vendorPostCode"
+                      label="Pincode"
+                    />
+                  </div>
+                </div>
+
+                {/* Bill to Section */}
+
+                <h1 className=" text-[#7c5dfa] my-4 mt-10 font-medium">
+                  Bill To
+                </h1>
+
+                <div className=" grid grid-cols-3 gap-x-4 mx-2 space-y-4 ">
+                  <div className=" flex flex-col col-span-3">
+                    <CustomField
+                      type="text"
+                      name="clientName"
+                      label="Client Name"
+                    />
+                  </div>
+
+                  <div className=" flex flex-col col-span-1">
+                    <CustomField
+                      type="number"
+                      name="clientPhone"
+                      label="Client Phone"
+                    />
+                  </div>
+
+                  <div className=" flex flex-col col-span-2">
+                    <CustomField
+                      type="email"
+                      name="clientEmail"
+                      label="Client Email"
+                    />
+                  </div>
+                  <div className=" flex flex-col col-span-3">
+                    <CustomField
+                      type="text"
+                      name="clientAddress"
+                      label="Client Address"
+                    />
+                  </div>
+
+                  <div className=" flex flex-col col-span-1">
+                    <CustomField
+                      type="text"
+                      name="clientCity"
+                      label="Client City"
+                    />
+                  </div>
+                  <div className=" flex flex-col col-span-1">
+                    <CustomField
+                      type="number"
+                      name="clientPostCode"
+                      label="Pincode"
+                    />
+                  </div>
+                </div>
+
+                <h1 className=" text-[#7c5dfa] mt-10 font-medium">
+                  Invoice Details
+                </h1>
+                <div className=" grid mx-1 grid-cols-2 gap-4 mt-2 ">
+                  <div className=" flex flex-col col-span-2 ">
+                    <CustomField
+                      type="date"
+                      name="invoiceDate"
+                      label="Invoice Date"
+                    />
+                  </div>
+                  <div className=" flex flex-col col-span-2">
+                    <CustomField
+                      type="date"
+                      name="deliveryDate"
+                      label="Delivery Date"
+                    />
+                  </div>
+                  <div className=" flex flex-col col-span-2 ">
+                    <CustomField
+                      type="text"
+                      name="otherDetails"
+                      label="Other Details"
+                    />
+                  </div>
+                  <div className=" flex flex-col col-span-1  ">
+                    <CustomField
+                      type="number"
+                      name="advancePayment"
+                      label="Advance Payment (₹)"
+                    />
+                  </div>
+                  <div className=" flex flex-col col-span-1  ">
+                    <CustomField
+                      type="number"
+                      name="discount"
+                      label="Overall Discount (₹)"
+                    />
+                  </div>
+                </div>
+
+                {/* Item List Section */}
+
+                <h2 className=" text-2xl text-gray-500 mt-10 ">Item List</h2>
+                {item.map((itemDetails, index) => (
+                  <div className=" border-b pb-2 border-gray-300 mb-4 ">
+                    <AddItem
+                      // isValidatorActive={isValidatorActive}
+                      key={index}
+                      handelOnChange={handelOnChange}
+                      setItem={setItem}
+                      onDelete={onDelete}
+                      itemDetails={itemDetails}
+                    />
+                  </div>
+                ))}
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setItem((state) => [
+                      ...state,
+                      {
+                        name: '',
+                        quantity: 1,
+                        price: 0,
+                        total: 0,
+                        id: uuidv4(),
+                      },
+                    ])
+                  }}
+                  className=" bg-gray-200  hover:opacity-80 mx-auto py-2 items-center dark:text-white dark:bg-[#252945] justify-center rounded-xl  w-full mt-6"
+                >
+                  + Add New Item
+                </button>
+              </div>
+
+              <div className=" flex  justify-between">
+                <div>
+                  <button
+                    onClick={() => {
+                      setOpenCreateInvoice(false)
+                    }}
+                    className=" bg-gray-200  hover:opacity-80 mx-auto py-4 items-center dark:text-white  dark:bg-[#252945] justify-center  px-8 rounded-full "
+                  >
+                    Discard
+                  </button>
+                </div>
+
+                <div>
+                  <button
+                    type="submit"
+                    className=" text-white  hover:opacity-80 mx-auto py-4 items-center bg-[#7c5dfa] justify-center  px-8 rounded-full "
+                  >
+                    Save & Send
+                  </button>
+                </div>
+              </div>
+            </Form>
+          </Formik>
         </div>
       </motion.div>
     </div>

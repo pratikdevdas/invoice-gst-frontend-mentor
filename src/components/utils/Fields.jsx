@@ -5,7 +5,6 @@ export function CustomField({ ...props }) {
   const [field, meta] = useField(props)
   const error = meta.touched && meta.error
   const { productName, label } = props
-  console.log(meta, field, props)
   return (
     <div className="relative">
       <label
@@ -24,7 +23,7 @@ export function CustomField({ ...props }) {
         }}
       />
       {error ? (
-        <div className="error text-sm shrink-0 absolute right-2 top-9 text-red-500">
+        <div className="error text-sm shrink-0 absolute right-10 top-9 text-red-500">
           {meta.error}
         </div>
       ) : null}

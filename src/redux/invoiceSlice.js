@@ -2,7 +2,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import moment from 'moment'
 import data from '../assets/data/data.json'
-import getForwardDate from '../functions/forwardDate'
 import generateID from '../functions/generateId'
 
 const today = moment().format('YYYY-MM-DD')
@@ -54,44 +53,47 @@ const invoiceSlice = createSlice({
     },
     addInvoice: (state, action) => {
       const {
-        description,
-        paymentTerms,
+        vendorName,
+        outlet,
+        vendorPostCode,
         clientName,
         clientEmail,
-        senderStreet,
-        senderCity,
-        senderPostCode,
-        senderCountry,
-        clientStreet,
-        clientCity,
+        clientPhone,
+        deliveryDate,
+        clientAddress,
         clientPostCode,
-        clientCountry,
+        clientCity,
+        otherDetails,
+        advancePayment,
+        discount,
         item,
       } = action.payload
 
       const finalData = {
         id: `${generateID()}`,
         createdAt: today,
-        paymentDue: getForwardDate(paymentTerms),
-        description,
-        paymentTerms,
+        deliveryDate,
+        invoiceDate: today,
         clientName,
         clientEmail,
+        clientPhone,
         status: 'pending',
-        senderAddress: {
-          street: senderStreet,
-          city: senderCity,
-          postCode: senderPostCode,
-          country: senderCountry,
+        vendorDetails: {
+          name: vendorName,
+          outlet,
+          postCode: vendorPostCode,
         },
         clientAddress: {
-          street: clientStreet,
-          city: clientCity,
+          street: clientAddress,
           postCode: clientPostCode,
-          country: clientCountry,
+          city: clientCity,
         },
         items: item,
         total: item.reduce((acc, i) => acc + Number(i.total), 0),
+        amountPaid: advancePayment,
+        leftToPay: item.reduce((acc, i) => acc + Number(i.total), 0) - advancePayment - discount,
+        otherDetails,
+        discount,
       }
       state.allInvoice.push(finalData)
     },

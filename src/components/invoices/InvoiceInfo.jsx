@@ -40,8 +40,6 @@ function InvoiceInfo({ onDelete }) {
 
   const invoice = useSelector((state) => state.invoices.invoiceById)
 
-  console.log(invoice)
-
   return (
     <div>
       {invoice ? (
@@ -98,17 +96,16 @@ function InvoiceInfo({ onDelete }) {
             <div className=" mt-4 rounded-lg w-full  px-6 py-6 bg-white dark:bg-[#1e2139]">
               <div className=" flex flex-col md:flex-row items-start justify-between w-full ">
                 <div>
-                  <h1 className=" font-semibold dark:text-white text-xl">
+                  <h1 className=" font-semibold dark:text-white text-lg">
                     <span className="text-[#7e88c3]">#</span>
                     {invoice.id}
                   </h1>
                   <p className=" text-sm text-gray-500">{invoice.clientName}</p>
                 </div>
                 <div className=" mt-4 md:mt-0 text-left text-gray-400 text-sm md:text-right felx flex-col items-center">
-                  <p>{invoice.senderAddress.street}</p>
-                  <p>{invoice.senderAddress.city}</p>
-                  <p>{invoice.senderAddress.postCode}</p>
-                  <p>{invoice.senderAddress.country}</p>
+                  <p>{invoice.vendorDetails.name}</p>
+                  <p>{invoice.vendorDetails.outlet}</p>
+                  <p>{invoice.vendorDetails.postCode}</p>
                 </div>
               </div>
 
@@ -117,13 +114,13 @@ function InvoiceInfo({ onDelete }) {
                   <div>
                     <h3 className=" text-gray-400 font-thin ">Invoice Date</h3>
                     <h1 className=" text-lg font-semibold dark:text-white">
-                      {formatDate(invoice.createdAt)}
+                      {formatDate(invoice.invoiceDate)}
                     </h1>
                   </div>
                   <div>
-                    <h3 className=" text-gray-400 font-thin ">Payment Due</h3>
+                    <h3 className=" text-gray-400 font-thin ">Delivery Date</h3>
                     <h1 className=" dark:text-white text-lg font-semibold">
-                      {formatDate(invoice.paymentDue)}
+                      {formatDate(invoice.deliveryDate)}
                     </h1>
                   </div>
                 </div>
@@ -142,15 +139,15 @@ function InvoiceInfo({ onDelete }) {
                   <p className=" text-gray-400 font-thin">
                     {invoice.clientAddress.postCode}
                   </p>
-                  <p className=" text-gray-400 font-thin">
-                    {invoice.clientAddress.country}
-                  </p>
                 </div>
 
                 <div className=" mt-8 md:mt-0">
                   <p className=" text-gray-400 font-thin">Sent to</p>
                   <h1 className=" dark:text-white text-lg font-semibold">
                     {invoice.clientEmail}
+                    {' '}
+                    <br />
+                    {invoice.clientPhone}
                   </h1>
                 </div>
               </div>
@@ -195,8 +192,15 @@ function InvoiceInfo({ onDelete }) {
                       </h1>
                     </div>
                     <div className=" space-y-4">
-                      <p className=" text-gray-400 font-thin">Total</p>
+                      <p className=" text-gray-400 font-thin">GST</p>
 
+                      <h1 className=" dark:text-white text-base font-semibold">
+
+                        18%
+                      </h1>
+                    </div>
+                    <div className=" space-y-4">
+                      <p className=" text-gray-400 font-thin">Total</p>
                       <h1 className=" dark:text-white text-base font-semibold">
                         ₹
                         {item.total}
@@ -205,13 +209,43 @@ function InvoiceInfo({ onDelete }) {
                   </div>
                 ))}
               </div>
-              <div className=" p-10 font-semibold text-white rounded-lg rounded-t-none justify-between flex dark:bg-black bg-gray-700 ">
-                <h3 className=" text-xl ">Amount Due</h3>
+              <div className=" p-10 font-semibold text-white rounded-lg rounded-t-none justify-between w-full flex flex-col dark:bg-black bg-gray-700 ">
+                <div className="w-full flex items-center justify-between">
 
-                <h1 className=" text-3xl">
-                  ₹
-                  {invoice.total}
-                </h1>
+                  <h3 className=" text-lg ">Amount Total</h3>
+
+                  <h3 className=" text-lg">
+                    ₹
+                    {invoice.total}
+                  </h3>
+                </div>
+                <div className="w-full flex items-center justify-between">
+
+                  <h3 className=" text-lg ">Advance Paid</h3>
+
+                  <h3 className=" text-lg">
+                    ₹
+                    {invoice.amountPaid}
+                  </h3>
+                </div>
+                <div className="w-full flex items-center justify-between">
+
+                  <h3 className=" text-lg ">Discount</h3>
+
+                  <h3 className=" text-lg">
+                    ₹
+                    {invoice.discount}
+                  </h3>
+                </div>
+                <div className="w-full flex items-center justify-between">
+
+                  <h3 className=" text-lg ">Left To Pay</h3>
+
+                  <h3 className=" text-lg">
+                    ₹
+                    {invoice.leftToPay}
+                  </h3>
+                </div>
               </div>
             </div>
           </div>

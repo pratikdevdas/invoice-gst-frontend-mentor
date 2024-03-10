@@ -40,6 +40,7 @@ module.exports = {
     "react/prop-types": 0,
     "linebreak-style": 0,
     "react/react-in-jsx-scope": "off",
+    "no-console": "warn",
     "max-len": [
       "error",
       {

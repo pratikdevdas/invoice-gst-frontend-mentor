@@ -7,10 +7,10 @@
 // import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Formik, Form } from 'formik'
-import * as Yup from 'yup'
 import { useDispatch } from 'react-redux'
 import productSlice from '../../redux/productSlice'
 import { CustomField } from '../utils/Fields'
+import { productValidation } from '../../utils/validationSchema'
 // import { v4 as uuidv4 } from 'uuid'
 // import AddItem from '../AddItem'
 // import invoiceSlice from '../../redux/invoiceSlice'
@@ -62,31 +62,13 @@ function AddProduct({ setOpenAddProduct }) {
             sgst: 0,
             // sku: 0,
           }}
-          validationSchema={Yup.object({
-            productName: Yup.string()
-              .min(5, 'Must be 5 characters or more')
-              .required('Required'),
-            description: Yup.string()
-              .max(20, 'Must be 20 characters or less')
-              .required('Required'),
-            specialCode: Yup.string()
-              .max(20, 'Must be 20 characters or less')
-              .required('Required'),
-            hsnCode: Yup.string()
-              .max(20, 'Must be 20 characters or less')
-              .required('Required'),
-            sellingPrice: Yup.number().required('Required'),
-            defaultDiscount: Yup.number('Must be a number'),
-            cgst: Yup.number('Must be a number').required('required'),
-            sgst: Yup.number('Must be a number').required('required'),
-            igst: Yup.number('Must be a number').required('required'),
-          })}
+          validationSchema={productValidation}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
-              alert(JSON.stringify(values, null, 2))
               dispatch(productSlice.actions.addProduct({ ...values }))
               setSubmitting(false)
             }, 400)
+            setOpenAddProduct(false)
           }}
         >
           <Form>
