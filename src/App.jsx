@@ -8,6 +8,7 @@ import invoiceSlice from './redux/invoiceSlice'
 import Products from './components/products/Products'
 import Login from './components/Login'
 import Dashboard from './components/Dashboard'
+import LiveInvoice from './components/live/LiveInvoice'
 
 function App() {
   const location = useLocation()
@@ -24,6 +25,7 @@ function App() {
         <Routes location={location} key={location.pathname}>
           <Route element={<Dashboard />} path="/dashboard">
             <Route element={<Products />} path="products" />
+            <Route element={<LiveInvoice />} path="live" />
             <Route element={<InvoiceInfo onDelete={onDelete} />} path="invoice" />
           </Route>
           <Route element={<Login />} path="/" />

@@ -89,7 +89,7 @@ function Header() {
               <Link to="/dashboard">
                 <BanknotesIcon className="w-8 mx-auto text-[#7E88C3]" />
               </Link>
-              <Link to="/stats">
+              <Link to="/dashboard/live">
                 <ChartBarIcon className="w-8 mx-auto text-[#7E88C3]" />
               </Link>
               <Link to="/dashboard/products">

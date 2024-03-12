@@ -176,7 +176,6 @@ function CreateInvoice({
               deliveryDate: '',
               otherDetails: '',
               advancePayment: 0,
-              discount: 0,
             }}
             validationSchema={invoiceValidation}
             onSubmit={(values, { setSubmitting }) => {
@@ -184,9 +183,7 @@ function CreateInvoice({
               setTimeout(() => {
                 alert(values)
                 dispatch(invoiceSlice.actions.addInvoice({ ...values, item }))
-                dispatch(
-                  invoiceSlice.actions.filterInvoice({ status: '' }),
-                )
+                dispatch(invoiceSlice.actions.filterInvoice({ status: '' }))
 
                 console.log(values, 'submitted')
                 setOpenCreateInvoice(false)

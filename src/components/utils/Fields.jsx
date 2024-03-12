@@ -31,24 +31,26 @@ export function CustomField({ ...props }) {
   )
 }
 
-export function NumberField({ ...props }) {
+export function LiveField({ ...props }) {
   const [field, meta] = useField(props)
-  const { className, icon } = props
   const error = meta.touched && meta.error
+  const { placeholder } = props
   return (
-    <div className={` relative flex bg[#E2DDF4] rounded-lg items-center bg-[#E2DDF4] ${className} ${error ? 'border-2 border-red-500' : ''}`}>
-      <span className="text-black/50 pl-2">{icon}</span>
+    <div className="relative">
       <input
         {...field}
         {...props}
-        className="bg-[#E2DDF4] pr-1 w-full pl-2 text-black/80 appearance-none rounded-lg border-none outline-none focus:ring-0"
+        placeholder={placeholder}
+        className={`dark:bg-[#1e2139] text-right outline-offset-0 mt-[1px] placeholder-slate-600 outline-[0.5px]  items-center bg-[#E2DDF4] ${error ? 'outline-red-400 focus:outline-red-400' : ' focus:outline-purple-400'}  w-full outline-none focus:ring-0`}
         style={{
           appearance: 'textfield',
           MozAppearance: 'textfield',
         }}
       />
-      {meta.touched && meta.error ? (
-        <div className="error text-sm text-red-500 mr-2">{meta.error}</div>
+      {error ? (
+        <div className="error text-sm shrink-0 absolute bottom-1 -left-16 text-red-500">
+          {meta.error}
+        </div>
       ) : null}
     </div>
   )
