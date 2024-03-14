@@ -10,6 +10,7 @@ import { LiveField } from '../utils/Fields'
 
 function LiveInvoice() {
   const [items, setItems] = useState([])
+  const [advance, setAdvance] = useState(0)
   const { toPDF, targetRef } = usePDF({ filename: 'page.pdf' })
   return (
     <motion.div
@@ -158,10 +159,52 @@ function LiveInvoice() {
               + Add New Item
             </button>
             <hr className="mt-4 mb-8 border-gray-700" />
-            <div>
-              Total Goods Amount :
-              {' '}
-              {/* {items.reduce((acc, item) => acc + item.amountToPay, 0)} */}
+
+            <div className="flex justify-between text-gray-300">
+              <div>dkf</div>
+              <div className="flex flex-col gap-2">
+                <div>
+                  Total Goods Amount :
+                  {' '}
+                  <span className="font-semibold text-lg text-white">
+                    ₹
+                    {Number(items.reduce((acc, curr) => acc + curr.taxable, 0)).toFixed(2)}
+                  </span>
+                </div>
+                <div>
+                  Total GST Amount :
+                  {' '}
+                  <span className="font-semibold text-white text-lg">
+                    ₹
+                    {Number(items.reduce((acc, curr) => acc + curr.gst, 0)).toFixed(2)}
+                  </span>
+                </div>
+                <div>
+                  Advance Payment :
+                  {' '}
+                  ₹
+                  <input
+                    className="w-16 text-center  dark:bg-[#141625] py-2 px-2 border-[.2px] rounded-lg focus:outline-none   focus:outline-purple-400 border-gray-300 dark:border-gray-800 dark:text-white"
+                    name="quantity"
+                    value={advance}
+                    type="number"
+                    onChange={(e) => {
+                      setAdvance(e.target.value)
+                    }}
+                  />
+                  {' '}
+                  <span className="font-semibold text-white text-lg" />
+                </div>
+                <div>
+                  Total Amount Left  :
+                  {' '}
+                  <span className="font-semibold text-white text-lg">
+                    ₹
+                    {Number(items.reduce((acc, curr) => acc + curr.amountToPay, 0)) - advance}
+                  </span>
+                </div>
+              </div>
+
             </div>
           </div>
           <button type="button" onClick={() => toPDF()}>save invoice</button>

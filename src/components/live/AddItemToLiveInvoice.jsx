@@ -12,11 +12,13 @@ function AddItemToLiveInvoice({ items, setItems, itemDetails }) {
   const [input, setInput] = useState('')
   const [quantity, setQuantity] = useState(0)
   const [discount, setDiscount] = useState(0)
+  const [viewQuantity, setViewQuantity] = useState(true)
+  const [viewDiscount, setViewDiscount] = useState(true)
 
   const total = itemDetails.price * quantity - discount
   const gst = total - total / (1 + (itemDetails.cgst + itemDetails.sgst) / 100)
-  const taxable = (total - gst).toFixed(2)
-  const halfGst = (gst / 2).toFixed(2)
+  const taxable = total - gst
+  const halfGst = gst / 2
   const amountToPay = total - gst + gst
 
   const onDelete = (id) => {
@@ -35,13 +37,16 @@ function AddItemToLiveInvoice({ items, setItems, itemDetails }) {
             }}
             value={input}
             type="text"
-            className="dark:bg-[#141625]  text-white w-full my-auto col-span-1 py-2 px-4 border-[.2px] border-b-0  rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none dark:border-gray-800"
-            placeholder="Search From your product or inventory"
+            className="dark:bg-[#141625]  text-white w-full col-span-1 py-2 px-4 border-[.2px] border-b-0  rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none dark:border-gray-800"
+            placeholder="Search with brandName or special code"
           />
           <ul className="cols-span-1 absolute dark:bg-[#1e2139] rounded-b-lg top-12 border-gray-300 dark:border-gray-800 dark:text-white ">
             {input
               && products
-                .filter((p) => p.productName.toLowerCase().includes(input.toLowerCase()))
+                .filter(
+                  (p) => p.productName.toLowerCase().includes(input.toLowerCase())
+                    || p.specialCode.toLowerCase().includes(input.toLowerCase()),
+                )
                 .map((p, i) => (
                   <li
                     className="list-none pt-2 py-2 px-4 hover:cursor-pointer  hover:bg-purple-600"
@@ -83,70 +88,84 @@ function AddItemToLiveInvoice({ items, setItems, itemDetails }) {
         <>
           <td className="w-[200px]">{itemDetails.name}</td>
           <td>{itemDetails.price}</td>
-          <td>
-            <input
-              className="mx-auto w-12 dark:bg-[#141625] py-2 text-center px-2 border-[.2px] rounded-lg focus:outline-none   focus:outline-purple-400 border-gray-300 dark:border-gray-800 dark:text-white"
-              name="quantity"
-              type="number"
-              value={quantity}
-              onChange={(e) => {
-                setQuantity(e.target.value)
-              }}
-              onBlur={() => setItems(
-                items.map((i) => (i.id === itemDetails.id
-                  ? {
-                    ...i,
-                    quantity,
-                    discount,
-                    taxable,
-                    gst,
-                    amountToPay,
-                  }
-                  : i)),
-              )}
-              placeholder={0}
-              required
-            />
+          <td className="text-center">
+            {viewQuantity ? (
+              <input
+                className="w-12 text-center  dark:bg-[#141625] py-2 px-2 border-[.2px] rounded-lg focus:outline-none   focus:outline-purple-400 border-gray-300 dark:border-gray-800 dark:text-white"
+                name="quantity"
+                type="number"
+                value={quantity}
+                onChange={(e) => {
+                  setQuantity(e.target.value)
+                }}
+                onBlur={() => {
+                  setItems(
+                    items.map((i) => (i.id === itemDetails.id
+                      ? {
+                        ...i,
+                        quantity,
+                        discount,
+                        taxable,
+                        gst,
+                        amountToPay,
+                      }
+                      : i)),
+                  )
+                  setViewQuantity(false)
+                }}
+                placeholder={0}
+                required
+              />
+            ) : (
+              <span>{quantity}</span>
+            )}
           </td>
-          <td>
+          <td className="text-center">
             {' '}
-            <input
-              className="w-16 text-center  dark:bg-[#141625] py-2 px-2 border-[.2px] rounded-lg focus:outline-none   focus:outline-purple-400 border-gray-300 dark:border-gray-800 dark:text-white"
-              name="quantity"
-              value={discount}
-              type="number"
-              onChange={(e) => {
-                setDiscount(e.target.value)
-              }}
-              onBlur={() => setItems(
-                items.map((i) => (i.id === itemDetails.id
-                  ? {
-                    ...i,
-                    quantity,
-                    discount,
-                    taxable,
-                    gst,
-                    amountToPay,
-                  }
-                  : i)),
-              )}
-              placeholder="0"
-              required
-            />
+            {viewDiscount ? (
+              <input
+                className="w-16 text-center  dark:bg-[#141625] py-2 px-2 border-[.2px] rounded-lg focus:outline-none   focus:outline-purple-400 border-gray-300 dark:border-gray-800 dark:text-white"
+                name="quantity"
+                value={discount}
+                type="number"
+                onChange={(e) => {
+                  setDiscount(e.target.value)
+                }}
+                onBlur={() => {
+                  setItems(
+                    items.map((i) => (i.id === itemDetails.id
+                      ? {
+                        ...i,
+                        quantity,
+                        discount,
+                        taxable,
+                        gst,
+                        amountToPay,
+                      }
+                      : i)),
+                  )
+                  setViewDiscount(false)
+                }}
+                placeholder="0"
+                required
+              />
+            ) : (
+              <span>{discount}</span>
+            )}
           </td>
           <td className="w-28">
-            {halfGst}
+            {halfGst.toFixed(2)}
             (
             {itemDetails.cgst}
             %)
           </td>
           <td className="w-28">
-            {halfGst}
+            {halfGst.toFixed(2)}
             (
             {itemDetails.sgst}
             %)
           </td>
-          <td className="w-24">{taxable}</td>
+          <td className="w-24">{taxable.toFixed(2)}</td>
           <td className="w-24">{amountToPay}</td>
           <td>
             {' '}

@@ -24,7 +24,6 @@ const invoiceSlice = createSlice({
         const filteredData = allInvoice.filter(
           (invoice) => invoice.status === action.payload.status,
         )
-        console.log(filteredData)
         state.filteredInvoice = filteredData
       }
     },
@@ -78,10 +77,10 @@ const invoiceSlice = createSlice({
         clientEmail,
         clientPhone,
         status: 'pending',
-        vendorDetails: {
-          name: vendorName,
-          outlet,
-          postCode: vendorPostCode,
+        billerDetails: {
+          billerName: vendorName,
+          billerOutlet: outlet,
+          billerPinCode: vendorPostCode,
         },
         clientAddress: {
           street: clientAddress,
