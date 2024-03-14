@@ -8,9 +8,7 @@ import { useState } from 'react'
 // import { v4 as uuidv4 } from 'uuid'
 import { TrashIcon } from '@heroicons/react/24/solid'
 
-import {
-  Formik, Form, FieldArray,
-} from 'formik'
+import { Formik, Form, FieldArray } from 'formik'
 import { usePDF } from 'react-to-pdf'
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
@@ -184,15 +182,17 @@ function LiveInvoice() {
                           && values.items.map((item, index) => {
                             console.log(item, 'item')
                             const total = item.price * item.quantity - item.discount
-                            const gst = total - total / (1 + (item.cgst + item.sgst) / 100)
+                            const gst = total
+                              - total / (1 + (item.cgst + item.sgst) / 100)
                             const taxable = total - gst
                             const halfGst = gst / 2
                             const amountToPay = total - gst + gst
                             return item.name ? (
-                              <tr className="text-center text-white text-sm " key={index}>
-                                <td className="te">
-                                  {item.name}
-                                </td>
+                              <tr
+                                className="text-center text-white text-sm "
+                                key={index}
+                              >
+                                <td className="te">{item.name}</td>
                                 <td className="col">
                                   {/* <label htmlFor={`items.${index}.email`}>Email</label> */}
                                   {item.price}
@@ -267,7 +267,7 @@ function LiveInvoice() {
                                           <li
                                             className="list-none pt-2 py-2 px-4 hover:cursor-pointer  hover:bg-purple-600"
                                             key={i}
-                                            onClick={() => replace(index, ({
+                                            onClick={() => replace(index, {
                                               name: p.productName,
                                               price: p.sellingPrice,
                                               specialCode: p.specialCode,
@@ -275,7 +275,7 @@ function LiveInvoice() {
                                               sgst: p.sgst,
                                               quantity: 1,
                                               discount: 0,
-                                            }))}
+                                            })}
                                           >
                                             {p ? (
                                               <p className="inline-flex gap-2">
@@ -299,22 +299,22 @@ function LiveInvoice() {
                               </tr>
                             )
                           })}
-                        {/* {items.map((itemDetails, index) => (
-                    <AddItemToLiveInvoice
-                      key={index}
-                      items={items}
-                      setItems={setItems}
-                      itemDetails={itemDetails}
-                      />
-                    ))} */}
                       </tbody>
                     </table>
                     <button
                       type="button"
                       className=" bg-gray-200  hover:opacity-80 mx-auto py-2 items-center dark:text-white dark:bg-[#252945] justify-center rounded-xl  w-full mt-6"
-                      onClick={() => push({ name: '', email: '' })}
+                      onClick={() => {
+                        if (values.items.length === 0) {
+                          return push({ name: '' })
+                        }
+                        if (values.items[values.items.length - 1].name === '') {
+                          return alert('Please fill the previous item')
+                        }
+                        return push({ name: '' })
+                      }}
                     >
-                      + Add New Friend
+                      + Add New Item
                     </button>
                   </div>
                 )}
