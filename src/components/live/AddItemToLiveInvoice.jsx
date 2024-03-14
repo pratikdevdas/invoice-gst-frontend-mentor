@@ -89,69 +89,25 @@ function AddItemToLiveInvoice({ items, setItems, itemDetails }) {
           <td className="w-[200px]">{itemDetails.name}</td>
           <td>{itemDetails.price}</td>
           <td className="text-center">
-            {viewQuantity ? (
-              <input
-                className="w-12 text-center  dark:bg-[#141625] py-2 px-2 border-[.2px] rounded-lg focus:outline-none   focus:outline-purple-400 border-gray-300 dark:border-gray-800 dark:text-white"
-                name="quantity"
-                type="number"
-                value={quantity}
-                onChange={(e) => {
-                  setQuantity(e.target.value)
-                }}
-                onBlur={() => {
-                  setItems(
-                    items.map((i) => (i.id === itemDetails.id
-                      ? {
-                        ...i,
-                        quantity,
-                        discount,
-                        taxable,
-                        gst,
-                        amountToPay,
-                      }
-                      : i)),
-                  )
-                  setViewQuantity(false)
-                }}
-                placeholder={0}
-                required
-              />
-            ) : (
-              <span>{quantity}</span>
-            )}
+            <input
+              className="w-12 text-center  dark:bg-[#141625] py-2 px-2 border-[.2px] rounded-lg focus:outline-none   focus:outline-purple-400 border-gray-300 dark:border-gray-800 dark:text-white"
+              name="quantity"
+              type="number"
+              value={quantity}
+              placeholder={0}
+              required
+            />
           </td>
           <td className="text-center">
             {' '}
-            {viewDiscount ? (
-              <input
-                className="w-16 text-center  dark:bg-[#141625] py-2 px-2 border-[.2px] rounded-lg focus:outline-none   focus:outline-purple-400 border-gray-300 dark:border-gray-800 dark:text-white"
-                name="quantity"
-                value={discount}
-                type="number"
-                onChange={(e) => {
-                  setDiscount(e.target.value)
-                }}
-                onBlur={() => {
-                  setItems(
-                    items.map((i) => (i.id === itemDetails.id
-                      ? {
-                        ...i,
-                        quantity,
-                        discount,
-                        taxable,
-                        gst,
-                        amountToPay,
-                      }
-                      : i)),
-                  )
-                  setViewDiscount(false)
-                }}
-                placeholder="0"
-                required
-              />
-            ) : (
-              <span>{discount}</span>
-            )}
+            <input
+              className="w-16 text-center  dark:bg-[#141625] py-2 px-2 border-[.2px] rounded-lg focus:outline-none   focus:outline-purple-400 border-gray-300 dark:border-gray-800 dark:text-white"
+              name="quantity"
+              value={discount}
+              type="number"
+              placeholder="0"
+              required
+            />
           </td>
           <td className="w-28">
             {halfGst.toFixed(2)}
