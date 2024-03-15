@@ -1,8 +1,5 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-// /* eslint-disable */
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { v4 as uuidv4 } from 'uuid'
@@ -14,12 +11,13 @@ import { CustomField, OutletDropDown } from '../utils/Fields'
 import { invoiceValidation } from '../../utils/validationSchema'
 
 function CreateOrders({
+  order,
   setOpenCreateOrders,
   type,
 }) {
   const dispatch = useDispatch()
 
-  const [items, setItems] = useState([])
+  const [items, setItems] = useState(type === 'edit' ? order.items : [])
   const onDelete = (id) => {
     setItems((pervState) => pervState.filter((el) => el.id !== id))
   }
@@ -75,7 +73,21 @@ function CreateOrders({
         </h1>
         <div className="overflow-y-auto scrollbar-hide">
           <Formik
-            initialValues={{
+            initialValues={type === 'edit' ? {
+              vendorName: order.vendorName,
+              outlet: order.outlet,
+              clientName: order.clientName,
+              clientEmail: order.clientEmail,
+              clientPhone: order.clientPhone,
+              clientAddress: order.clientAddress,
+              clientCity: order.clientCity,
+              clientPostCode: order.clientPostCode,
+              clientGST: order.clientGST,
+              clientBirthDate: order.clientBirthDate,
+              deliveryDate: order.deliveryDate,
+              advancePayment: order.advancePayment,
+              discount: order.discount,
+            } : {
               vendorName: 'Asian Optics',
               outlet: 'Golmuri',
               clientName: '',
@@ -96,11 +108,16 @@ function CreateOrders({
                 alert('Please add atleast one items')
                 return setSubmitting(false)
               }
+              if (type === 'edit') {
+                dispatch(orderSlipSlice.actions.editOrder({ ...values, items, id: order.id }))
+                dispatch(orderSlipSlice.actions.filterOrder({ status: '' }))
+                setOpenCreateOrders(false)
+                return setSubmitting(false)
+              }
               return setTimeout(() => {
                 alert(values)
                 dispatch(orderSlipSlice.actions.addOrder({ ...values, items }))
                 dispatch(orderSlipSlice.actions.filterOrder({ status: '' }))
-                console.log(values, 'submitted')
                 setOpenCreateOrders(false)
                 setSubmitting(false)
               }, 400)
@@ -108,8 +125,6 @@ function CreateOrders({
           >
             <Form>
               <div className=" overflow-y-scroll scrollbar-hide mb-6">
-
-                {/* Bill to Section */}
 
                 <h1 className=" text-[#7c5dfa] my-4 mt-10 font-medium">
                   Bill To
@@ -181,9 +196,12 @@ function CreateOrders({
                   Invoice Details
                 </h1>
                 <div className=" grid mx-1 grid-cols-2 gap-4 mt-2 ">
-                  <div className=" flex flex-col col-span-2">
-                    <OutletDropDown name="outlet" label="Outlet" options={['Golmuri', 'Sakchi', 'Global Vision(Titan)']} />
-                  </div>
+                  {type === 'edit' ? <div className="hidden" /> : (
+                    <div className=" flex flex-col col-span-2">
+                      <OutletDropDown name="outlet" label="Outlet" options={['Golmuri', 'Sakchi', 'Global Vision(Titan)']} />
+                    </div>
+                  )}
+
                   <div className=" flex flex-col col-span-2">
                     <CustomField
                       type="date"
@@ -213,6 +231,7 @@ function CreateOrders({
                     <AddItem
                       key={itemDetails.id}
                       handelOnChange={handelOnChange}
+                      items={items}
                       setItems={setItems}
                       onDelete={onDelete}
                       itemDetails={itemDetails}
@@ -243,6 +262,7 @@ function CreateOrders({
               <div className=" flex  justify-between">
                 <div>
                   <button
+                    type="button"
                     onClick={() => {
                       setOpenCreateOrders(false)
                     }}

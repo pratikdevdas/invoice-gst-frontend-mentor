@@ -72,43 +72,18 @@ const orderSlipSlice = createSlice({
     editOrder: (state, action) => {
       const { allOrder } = state
       const {
-        description,
-        paymentTerms,
-        clientName,
-        clientEmail,
-        senderStreet,
-        senderCity,
-        senderPostCode,
-        senderCountry,
-        clientStreet,
-        clientCity,
-        clientPostCode,
-        clientCountry,
-        item,
-        id,
+        id, items, advancePayment, discount,
       } = action.payload
-
-      const orderIndex = allOrder.findIndex((order) => order.id === id)
       const edittedObject = {
-        description,
-        paymentTerms,
-        clientName,
-        clientEmail,
-        senderAddress: {
-          street: senderStreet,
-          city: senderCity,
-          postCode: senderPostCode,
-          country: senderCountry,
-        },
-        clientAddress: {
-          street: clientStreet,
-          city: clientCity,
-          postCode: clientPostCode,
-          country: clientCountry,
-        },
-        items: item,
-        total: item.reduce((acc, i) => acc + Number(i.total), 0),
+        ...action.payload,
+        leftToPay:
+        items.reduce((acc, i) => acc + Number(i.total), 0)
+        - advancePayment
+        - discount,
+        total: items.reduce((acc, i) => acc + Number(i.total), 0),
+        editedAt: moment().format('MMMM Do YYYY, h:mm:ss a'),
       }
+      const orderIndex = allOrder.findIndex((order) => order.id === id)
 
       if (orderIndex !== -1) {
         allOrder[orderIndex] = {

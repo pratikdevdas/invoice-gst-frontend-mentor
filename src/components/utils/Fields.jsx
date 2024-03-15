@@ -35,7 +35,6 @@ export function CustomField({ ...props }) {
 export function OutletDropDown({ ...props }) {
   const [field, meta] = useField(props)
   const error = meta.touched && meta.error
-  console.log(field, meta)
   const { label, options } = props
   return (
     <div className="relative">
@@ -56,7 +55,7 @@ export function OutletDropDown({ ...props }) {
         }}
       >
         {options.map((o) => (
-          <option value={o}>{o}</option>
+          <option key={o} value={o}>{o}</option>
         ))}
       </select>
       {error ? (

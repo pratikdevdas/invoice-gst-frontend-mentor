@@ -256,7 +256,7 @@ function OrderInfo({ onDelete }) {
                 </div>
                 <div className="w-full flex items-center justify-between">
 
-                  <h3 className=" text-lg ">Left To Pay</h3>
+                  <h3 className=" text-lg ">Balance</h3>
 
                   <h3 className=" text-lg">
                     ₹

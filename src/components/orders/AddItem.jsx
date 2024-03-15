@@ -11,30 +11,29 @@ function AddItem({
 }) {
   const products = useSelector((state) => state.products.allProducts)
   const [input, setInput] = useState('')
-  const [value, setValue] = useState('')
-  const [quantity, setQuantity] = useState(0)
+  const [quantity, setQuantity] = useState(itemDetails.quantity || 1)
   // let product
   return (
     <div className="flex dark:text-white justify-between items-center">
       <div className="grow flex px-2 py-2  flex-col">
-        {value ? (
+        {itemDetails.name !== '' ? (
           <div className="flex">
             <div className=" flex px-2 py-2  flex-col items-start">
               <h1>Item Name</h1>
               <div className=" dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg focus:outline-none   focus:outline-purple-400 border-gray-300 dark:border-gray-800 dark:text-white">
-                {value.productName}
+                {itemDetails.name}
               </div>
             </div>
             <div className=" flex px-2 py-2  flex-col items-start">
               <h1>Selling Price</h1>
-              <div className=" dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg focus:outline-none   focus:outline-purple-400 border-gray-300 dark:border-gray-800 dark:text-white">
-                {value.sellingPrice}
+              <div className="print:bg-red dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg focus:outline-none   focus:outline-purple-400 border-gray-300 dark:border-gray-800 dark:text-white">
+                {itemDetails.price}
               </div>
             </div>
             <div className=" flex px-2 py-2  flex-col items-start">
               <h1>GST</h1>
               <div className=" dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg focus:outline-none   focus:outline-purple-400 border-gray-300 dark:border-gray-800 dark:text-white">
-                {value.igst + value.cgst + value.sgst}
+                {itemDetails.gst}
                 {' '}
                 %
               </div>
@@ -48,7 +47,7 @@ function AddItem({
                 onChange={(e) => {
                   setQuantity(e.target.value)
                   setItems((state) => state.map((item) => (item.id === itemDetails.id
-                    ? { ...item, quantity: e.target.value, total: e.target.value * value.sellingPrice }
+                    ? { ...item, quantity: e.target.value, total: e.target.value * itemDetails.price }
                     : item)))
                 }}
                 placeholder="0"
@@ -59,7 +58,7 @@ function AddItem({
             <div className=" flex px-2 py-2  flex-col items-start">
               Total
               <div className=" dark:bg-[#1e2139] py-2 px-4 border-[.2px] rounded-lg focus:outline-none   focus:outline-purple-400 border-gray-300 dark:border-gray-800 dark:text-white">
-                {quantity * value.sellingPrice}
+                {quantity * itemDetails.price}
               </div>
             </div>
           </div>
@@ -75,18 +74,16 @@ function AddItem({
               className="dark:bg-[#1e2139] w-full my-auto col-span-1 py-2 px-4 border-[.2px] border-b-0  rounded-lg  focus:outline-purple-400 border-gray-300 focus:outline-none dark:border-gray-800"
               placeholder="Search From your product or inventory"
             />
-            <div className="cols-span-1 dark:bg-[#1e2139] rounded-b-lg hover:mt-2 border-gray-300 dark:border-gray-800 dark:text-white ">
-              {input
+            {input
                     && products
                       .filter((p) => p.productName
                         .toLowerCase()
                         .includes(input.toLowerCase()))
                       .map((p) => (
                         <li
-                          className="list-none pt-2 py-2 px-4 hover:cursor-pointer  hover:bg-purple-600"
+                          className="list-none mt-1 pt-2 py-2 px-4 hover:cursor-pointer  hover:bg-purple-600"
                           key={p.id}
                           onClick={() => {
-                            setValue(p)
                             setItems((state) => state.map((item) => (item.id === itemDetails.id
                               ? {
                                 ...item,
@@ -115,7 +112,6 @@ function AddItem({
                           ) : 'No product with this name'}
                         </li>
                       ))}
-            </div>
           </div>
         )}
       </div>
