@@ -35,12 +35,6 @@ function Header() {
 
         <img
           src={logo}
-          className="h-[80px] absolute top-24 left-0"
-          alt="logo"
-        />
-
-        <img
-          src={logo}
           className="h-[80px] absolute top-0 left-0"
           alt="logo"
         />

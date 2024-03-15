@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom'
 import AddProduct from './AddProduct'
 import ProductList from './ProductList'
 import plus from '../../assets/plus.png'
@@ -9,8 +8,6 @@ import plus from '../../assets/plus.png'
 function Product() {
   const [openAddProduct, setOpenAddProduct] = useState(false)
   const products = useSelector((state) => state.products.allProducts)
-  const location = useLocation()
-  console.log(location)
   return (
     <div className="dark:bg-[#141625] scrollbar-hide duration-300 min-h-screen bg-[#f8f8fb] pb-8 px-2 md:px-8 lg:px-12 lg:pb-[72px]  ">
       <motion.div

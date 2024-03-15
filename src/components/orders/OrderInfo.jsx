@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useDispatch, useSelector } from 'react-redux'
 import leftArrow from '../../assets/icon-arrow-left.svg'
-import PaidStatus from './PaidStatus'
-import invoiceSlice from '../../redux/invoiceSlice'
+import DeliveryStatus from './DeliveryStatus'
+import orderSlipSlice from '../../redux/orderSlipSlice'
 import formatDate from '../../functions/formatDate'
 import DeleteModal from './DeleteModal'
 import CreateOrders from './CreateOrders'
@@ -17,34 +17,34 @@ function OrderInfo({ onDelete }) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [isEditOpen, setIsEditOpen] = useState(false)
 
-  const invoiceId = location.search.substring(1)
-  const onMakePaidClick = () => {
+  const orderId = location.search.substring(1)
+  const markDelivered = () => {
     dispatch(
-      invoiceSlice.actions.updateInvoiceStatus({
-        id: invoiceId,
-        status: 'paid',
+      orderSlipSlice.actions.updateOrderStatus({
+        id: orderId,
+        status: 'delivered',
       }),
     )
-    dispatch(invoiceSlice.actions.getInvoiceById({ id: invoiceId }))
+    dispatch(orderSlipSlice.actions.getOrderById({ id: orderId }))
   }
 
   useEffect(() => {
-    dispatch(invoiceSlice.actions.getInvoiceById({ id: invoiceId }))
-  }, [invoiceId, onMakePaidClick])
+    dispatch(orderSlipSlice.actions.getOrderById({ id: orderId }))
+  }, [orderId, markDelivered])
 
   const onDeleteButtonClick = () => {
     navigate('/dashboard')
     setIsDeleteModalOpen(false)
-    onDelete(invoiceId)
+    onDelete(orderId)
   }
 
-  const invoice = useSelector((state) => state.invoices.invoiceById)
+  const order = useSelector((state) => state.orders.orderById)
 
   return (
     <div>
-      {invoice ? (
+      {order ? (
         <motion.div
-          key="invoice-info"
+          key="order-info"
           initial={{ x: 0 }}
           animate={{ x: 0 }}
           exit={{ x: '200%' }}
@@ -63,8 +63,7 @@ function OrderInfo({ onDelete }) {
 
             <div className=" mt-8 rounded-lg w-full flex items-center justify-between px-6 py-6 bg-white dark:bg-[#1e2139]">
               <div className=" flex space-x-2 justify-between md:justify-start md:w-auto w-full items-center">
-                <h1 className=" text-gray-600 dark:text-gray-400">Status</h1>
-                <PaidStatus type={invoice.status} />
+                <DeliveryStatus type={order.status} />
               </div>
               <div className=" md:block hidden">
                 <button
@@ -77,17 +76,17 @@ function OrderInfo({ onDelete }) {
                 <button
                   type="button"
                   onClick={() => setIsDeleteModalOpen(true)}
-                  className=" ml-3 text-center  text-white bg-red-500 hover:opacity-80 p-3 px-7 rounded-full"
+                  className=" ml-3 text-center dark:bg-[#252945] text-[#7e88c3] bg-slate-100 hover:opacity-80 p-3 px-7 rounded-full"
                 >
-                  Delete
+                  Create Invoice
                 </button>
-                {invoice.status === 'pending' && (
+                {order.status === 'pending' && (
                   <button
                     type="button"
-                    onClick={onMakePaidClick}
+                    onClick={markDelivered}
                     className=" ml-3 text-center  text-white bg-[#7c5dfa] hover:opacity-80 p-3 px-7 rounded-full"
                   >
-                    Make as Paid
+                    Make as Delivered
                   </button>
                 )}
               </div>
@@ -95,32 +94,34 @@ function OrderInfo({ onDelete }) {
 
             <div className=" mt-4 rounded-lg w-full  px-6 py-6 bg-white dark:bg-[#1e2139]">
               <div className=" flex flex-col md:flex-row items-start justify-between w-full ">
+                <div className=" mt-4 md:mt-0 text-left text-gray-400 text-sm md:text-right flex flex-col items-center">
+                  <h1 className=" font-semibold dark:text-white text-lg">
+                    {order.vendorName}
+                  </h1>
+                  <p>{order.outlet}</p>
+                </div>
                 <div>
                   <h1 className=" font-semibold dark:text-white text-lg">
                     <span className="text-[#7e88c3]">#</span>
-                    {invoice.id}
+                    {order.customId}
                   </h1>
-                  <p className=" text-sm text-gray-500">{invoice.clientName}</p>
+                  <p className=" text-sm text-gray-500">{order.clientName}</p>
                 </div>
-                <div className=" mt-4 md:mt-0 text-left text-gray-400 text-sm md:text-right felx flex-col items-center">
-                  <p>{invoice.vendorDetails.name}</p>
-                  <p>{invoice.vendorDetails.outlet}</p>
-                  <p>{invoice.vendorDetails.postCode}</p>
-                </div>
+
               </div>
 
               <div className=" mt-10 grid grid-cols-2 w-full  md:grid-cols-3">
                 <div className=" flex flex-col justify-between">
                   <div>
-                    <h3 className=" text-gray-400 font-thin ">Invoice Date</h3>
+                    <h3 className=" text-gray-400 font-thin ">Order Date</h3>
                     <h1 className=" text-lg font-semibold dark:text-white">
-                      {formatDate(invoice.invoiceDate)}
+                      {formatDate(order.createdAt)}
                     </h1>
                   </div>
                   <div>
                     <h3 className=" text-gray-400 font-thin ">Delivery Date</h3>
                     <h1 className=" dark:text-white text-lg font-semibold">
-                      {formatDate(invoice.deliveryDate)}
+                      {formatDate(order.deliveryDate)}
                     </h1>
                   </div>
                 </div>
@@ -128,43 +129,50 @@ function OrderInfo({ onDelete }) {
                 <div className="">
                   <p className=" text-gray-400 font-thin">Bill to</p>
                   <h1 className=" dark:text-white text-lg font-semibold">
-                    {invoice.clientName}
+                    {order.clientName}
                   </h1>
                   <p className=" text-gray-400 font-thin">
-                    {invoice.clientAddress.street}
+                    {order.clientAddress}
                   </p>
                   <p className=" text-gray-400 font-thin">
-                    {invoice.clientAddress.city}
-                  </p>
-                  <p className=" text-gray-400 font-thin">
-                    {invoice.clientAddress.postCode}
+                    {order.clientCity}
                   </p>
                 </div>
 
                 <div className=" mt-8 md:mt-0">
                   <p className=" text-gray-400 font-thin">Send to</p>
-                  <h1 className=" dark:text-white text-lg font-semibold">
-                    {invoice.clientEmail}
-                    {' '}
+                  <h1 className=" dark:text-white">
+                    {order.clientPhone}
                     <br />
-                    {invoice.clientPhone}
+                    {order?.clientEmail }
                   </h1>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      console.log('send invoic')
-                    }}
-                    className=" text-center  text-white bg-[#7c5dfa] hover:opacity-80 p-1 px-2 rounded-md"
-                  >
-                    Send Invoice
-                  </button>
+                  <div className="flex gap-2 items-start">
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        console.log('send invoice')
+                      }}
+                      className=" text-center  text-sm text-white bg-[#786aaf] hover:opacity-80 p-0.5 px-1 rounded-md"
+                    >
+                      Send Order
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        console.log('send invoice')
+                      }}
+                      className=" text-center  text-sm text-white bg-[#786aaf] hover:opacity-80 p-0.5 px-1 rounded-md"
+                    >
+                      Print
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              {/* Last Section */}
-
+              {/*
               <div className=" sm:hidden mt-10 bg-[#f9fafe] dark:bg-[#252945] rounded-lg rounded-b-none space-y-4  p-10">
-                {invoice.items.map((item) => (
+                {order.items.map((item) => (
                   <div className=" justify-between text-lg dark:text-white flex">
                     <h1>{item.name}</h1>
                     <h1>
@@ -173,10 +181,10 @@ function OrderInfo({ onDelete }) {
                     </h1>
                   </div>
                 ))}
-              </div>
+              </div> */}
 
               <div className=" hidden sm:block mt-10 bg-[#f9fafe] dark:bg-[#252945] rounded-lg rounded-b-none space-y-4  p-10">
-                {invoice.items.map((item) => (
+                {order.items.map((item) => (
                   <div key={item.name} className=" flex justify-around  ">
                     <div className=" space-y-4">
                       <p className=" text-gray-400 font-thin">Item name</p>
@@ -218,14 +226,14 @@ function OrderInfo({ onDelete }) {
                   </div>
                 ))}
               </div>
-              <div className=" p-10 font-semibold text-white rounded-lg rounded-t-none justify-between w-full flex flex-col dark:bg-black bg-gray-700 ">
+              <div className="print:bg-red-700 p-10 font-semibold text-white rounded-lg rounded-t-none justify-between w-full flex flex-col dark:bg-black bg-gray-700 ">
                 <div className="w-full flex items-center justify-between">
 
                   <h3 className=" text-lg ">Amount Total</h3>
 
                   <h3 className=" text-lg">
                     ₹
-                    {invoice.total}
+                    {order.total}
                   </h3>
                 </div>
                 <div className="w-full flex items-center justify-between">
@@ -234,7 +242,7 @@ function OrderInfo({ onDelete }) {
 
                   <h3 className=" text-lg">
                     ₹
-                    {invoice.amountPaid}
+                    {order.advancePayment}
                   </h3>
                 </div>
                 <div className="w-full flex items-center justify-between">
@@ -243,7 +251,7 @@ function OrderInfo({ onDelete }) {
 
                   <h3 className=" text-lg">
                     ₹
-                    {invoice.discount}
+                    {order.discount}
                   </h3>
                 </div>
                 <div className="w-full flex items-center justify-between">
@@ -252,7 +260,7 @@ function OrderInfo({ onDelete }) {
 
                   <h3 className=" text-lg">
                     ₹
-                    {invoice.leftToPay}
+                    {order.leftToPay}
                   </h3>
                 </div>
               </div>
@@ -267,13 +275,13 @@ function OrderInfo({ onDelete }) {
         <DeleteModal
           onDeleteButtonClick={onDeleteButtonClick}
           setIsDeleteModalOpen={setIsDeleteModalOpen}
-          invoiceId={invoice.id}
+          orderId={order.id}
         />
       )}
       <AnimatePresence>
         {isEditOpen && (
           <CreateOrders
-            invoice={invoice}
+            order={order}
             type="edit"
             setOpenCreateOrders={setIsEditOpen}
           />

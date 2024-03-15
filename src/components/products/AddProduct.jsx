@@ -8,10 +8,10 @@
 import { motion } from 'framer-motion'
 import { Formik, Form } from 'formik'
 import { useDispatch } from 'react-redux'
+import { v4 as uuidv4 } from 'uuid'
 import productSlice from '../../redux/productSlice'
 import { CustomField } from '../utils/Fields'
 import { productValidation } from '../../utils/validationSchema'
-// import { v4 as uuidv4 } from 'uuid'
 // import AddItem from '../AddItem'
 // import invoiceSlice from '../../redux/invoiceSlice'
 
@@ -60,6 +60,7 @@ function AddProduct({ setOpenAddProduct }) {
             cgst: 0,
             igst: 0,
             sgst: 0,
+            id: uuidv4(),
             // sku: 0,
           }}
           validationSchema={productValidation}

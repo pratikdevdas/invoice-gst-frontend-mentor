@@ -10,7 +10,7 @@ function ProductList({ products }) {
     <div className=" mt-10   space-y-4">
       {products.map((product, index) => (
         <motion.div
-          key={product.name}
+          key={product.id}
           initial={{ opacity: 0, y: -50 }}
           animate={{
             opacity: 1,

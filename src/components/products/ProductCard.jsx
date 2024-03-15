@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 function ProductCard({ product }) {
   return (
     <Link
-      to={`/product?${product.productName}`}
+      to={`/product?${product.id}`}
     >
       {/* Big Screen  */}
       <div className=" hidden md:flex cursor-pointer duration-100  ease-in-out  hover:border border-purple-500 py-4 shadow-sm px-6 dark:bg-[#1E2139] bg-white rounded-lg  items-center justify-between">
@@ -14,7 +14,7 @@ function ProductCard({ product }) {
 
           <h2 className=" text-sm text-gray-400 font-light ml-6">
 
-            {product.description}
+            {product.specialCode}
           </h2>
 
           <h2 className=" text-sm text-gray-400 font-light ml-10">

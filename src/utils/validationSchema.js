@@ -25,17 +25,15 @@ export const invoiceValidation = Yup.object({
     .min(5, 'Must be 5 characters or more')
     .required('Required'),
   outlet: Yup.string().required('Required'),
-  vendorPostCode: Yup.number().required('Required'),
   clientName: Yup.string().required('Required'),
   clientEmail: Yup.string().required('Required').email('Invalid email address'),
   clientPhone: Yup.number().required('Required'),
-  clientAddress: Yup.string()
-    .min(5, 'Must be 5 characters or more')
-    .required('Required'),
-  clientCity: Yup.string().required('Required'),
-  clientPostCode: Yup.number().required('Required'),
-  deliveryDate: Yup.date().min(new Date(), 'Please choose future date'),
-  otherDetails: Yup.string(),
+  clientAddress: Yup.string(),
+  clientCity: Yup.string(),
+  clientGST: Yup.string(),
+  clientPostCode: Yup.number(),
+  clientBirthDate: Yup.date(),
+  deliveryDate: Yup.date().min(new Date(), 'Please choose future date').required('Required'),
   advancePayment: Yup.number(),
   discount: Yup.number(),
 })

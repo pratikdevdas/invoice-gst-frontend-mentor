@@ -1,272 +1,116 @@
 [
   {
-    "id": "ABC123",
-    "createdAt": "2024-03-15",
-    "deliveryDate": "2024-03-20",
-    "invoiceDate": "2024-03-15",
-    "clientName": "John Doe",
-    "clientEmail": "john.doe@example.com",
-    "clientPhone": 1234567890,
-    "status": "pending",
-    "vendorDetails": {
-      "name": "Fashion Hub",
-      "outlet": "City Center",
-      "postCode": 567890
-    },
-    "clientAddress": {
-      "street": "Main Street",
-      "postCode": 567890,
-      "city": "Metropolis"
-    },
+    "vendorName": "Asian Optics",
+    "outlet": "Golmuri",
+    "clientName": "Dalton Sharpe",
+    "clientEmail": "puwaruleh@mailinator.com",
+    "clientPhone": 854654696,
+    "clientAddress": "BhagwaPur",
+    "clientCity": "Halcity",
+    "clientPostCode": 4950402,
+    "clientGST": "GDT239DSFL43298",
+    "clientBirthDate": "1993-09-08",
+    "deliveryDate": "2024-04-06",
+    "advancePayment": 400,
+    "discount": 300,
     "items": [
       {
-        "name": "Designer Watch",
-        "quantity": 2,
-        "price": 1500,
-        "total": 3000,
-        "id": "98765abc-1234-5678-defg-098765432112",
-        "gst": 12,
-        "specialCode": "W123"
-      },
-      {
-        "name": "Leather Bag",
-        "quantity": 1,
-        "price": 2500,
-        "total": 2500,
-        "id": "12345def-5678-abcd-5678-abcdef987654",
+        "name": "RayBan Sunglasses",
+        "quantity": "1",
+        "price": 3200,
+        "total": 3200,
+        "id": "302e676b-ef28-44fc-81fc-1dafb5c33d9b",
         "gst": 18,
-        "specialCode": "B456"
+        "specialCode": "21DSD"
       }
     ],
-    "total": 5500,
-    "amountPaid": 1000,
-    "leftToPay": 4500,
-    "otherDetails": "Additional details for Invoice ABC123",
-    "discount": 300
+    "createdAt": "2024-03-15",
+    "total": 3200,
+    "customId": "OR-GOLM-1-7",
+    "id": "8e0dc749-ca41-465f-88ee-e47532ba1fe0",
+    "leftToPay": 2500,
+    "status": "pending"
   },
   {
-    "id": "XYZ789",
-    "createdAt": "2024-03-12",
-    "deliveryDate": "2024-03-18",
-    "invoiceDate": "2024-03-12",
-    "clientName": "Alice Johnson",
-    "clientEmail": "alice.johnson@example.com",
-    "clientPhone": 9876543210,
-    "status": "paid",
-    "vendorDetails": {
-      "name": "Tech Paradise",
-      "outlet": "Electro Zone",
-      "postCode": 456789
-    },
-    "clientAddress": {
-      "street": "Tech Street",
-      "postCode": 456789,
-      "city": "Tech City"
-    },
+    "vendorName": "Fashion Trends",
+    "outlet": "City Center",
+    "clientName": "Alicia Smith",
+    "clientEmail": "alicia.smith@example.com",
+    "clientPhone": 987654321,
+    "clientAddress": "123 Fashion Ave",
+    "clientCity": "Metropolis",
+    "clientPostCode": 543210,
+    "clientGST": "GST123456789",
+    "clientBirthDate": "1985-12-15",
+    "deliveryDate": "2024-04-10",
+    "advancePayment": 500,
+    "discount": 100,
+    "items": [
+      {
+        "name": "Designer Dress",
+        "quantity": "2",
+        "price": 250,
+        "total": 500,
+        "id": "a0b1c2d3-ef28-44fc-81fc-1dafb5c33d9b",
+        "gst": 12,
+        "specialCode": "FASHION123"
+      },
+      {
+        "name": "High Heel Shoes",
+        "quantity": "1",
+        "price": 120,
+        "total": 120,
+        "id": "b1c2d3e4-ef28-44fc-81fc-1dafb5c33d9b",
+        "gst": 12,
+        "specialCode": "SHOES456"
+      }
+    ],
+    "createdAt": "2024-03-14",
+    "total": 620,
+    "customId": "OR-CC-2-8",
+    "id": "1a2b3c4d-ca41-465f-88ee-e47532ba1fe0",
+    "leftToPay": 120,
+    "status": "pending"
+  },
+  {
+    "vendorName": "ElectroMart",
+    "outlet": "Tech Plaza",
+    "clientName": "John Doe",
+    "clientEmail": "john.doe@example.com",
+    "clientPhone": 123456789,
+    "clientAddress": "456 Tech Street",
+    "clientCity": "Techville",
+    "clientPostCode": 123456,
+    "clientGST": "GST987654321",
+    "clientBirthDate": "1990-05-20",
+    "deliveryDate": "2024-04-08",
+    "advancePayment": 300,
+    "discount": 50,
     "items": [
       {
         "name": "Smartphone",
-        "quantity": 1,
+        "quantity": "1",
         "price": 800,
         "total": 800,
-        "id": "abcd1234-5678-efgh-5678-ijklmnopqrst",
-        "gst": 10,
-        "specialCode": "S789"
+        "id": "c2d3e4f5-ef28-44fc-81fc-1dafb5c33d9b",
+        "gst": 18,
+        "specialCode": "PHONE789"
       },
       {
         "name": "Laptop",
-        "quantity": 1,
-        "price": 2000,
-        "total": 2000,
-        "id": "efgh5678-ijkl-1234-mnop-qrstabcd5678",
-        "gst": 15,
-        "specialCode": "L012"
-      }
-    ],
-    "total": 2800,
-    "amountPaid": 2800,
-    "leftToPay": 0,
-    "otherDetails": "Details for Invoice XYZ789",
-    "discount": 0
-  },
-  {
-    "id": "PQR456",
-    "createdAt": "2024-03-18",
-    "deliveryDate": "2024-03-24",
-    "invoiceDate": "2024-03-18",
-    "clientName": "Emily Brown",
-    "clientEmail": "emily.brown@example.com",
-    "clientPhone": 7890123456,
-    "status": "pending",
-    "vendorDetails": {
-      "name": "Home Essentials",
-      "outlet": "Furniture Emporium",
-      "postCode": 678901
-    },
-    "clientAddress": {
-      "street": "Comfort Lane",
-      "postCode": 678901,
-      "city": "Cozy Town"
-    },
-    "items": [
-      {
-        "name": "Sofa Set",
-        "quantity": 1,
-        "price": 3500,
-        "total": 3500,
-        "id": "ijklmnopqrst-7890-abcd-ijkl-mnopqrstabcd",
-        "gst": 12,
-        "specialCode": "SF456"
-      },
-      {
-        "name": "Coffee Table",
-        "quantity": 2,
-        "price": 1000,
-        "total": 2000,
-        "id": "7890abcd-ijklmnopqrst-abcd-ijklmnopqrst",
-        "gst": 18,
-        "specialCode": "CT789"
-      }
-    ],
-    "total": 5500,
-    "amountPaid": 1500,
-    "leftToPay": 4000,
-    "otherDetails": "Additional details for Invoice PQR456",
-    "discount": 300
-  },
-  {
-    "id": "DEF456",
-    "createdAt": "2024-03-20",
-    "deliveryDate": "2024-03-25",
-    "invoiceDate": "2024-03-20",
-    "clientName": "Michael Smith",
-    "clientEmail": "michael.smith@example.com",
-    "clientPhone": 6543210987,
-    "status": "pending",
-    "vendorDetails": {
-      "name": "Sports Galaxy",
-      "outlet": "Fitness Arena",
-      "postCode": 789012
-    },
-    "clientAddress": {
-      "street": "Active Street",
-      "postCode": 789012,
-      "city": "Fit City"
-    },
-    "items": [
-      {
-        "name": "Running Shoes",
-        "quantity": 2,
+        "quantity": "1",
         "price": 1200,
-        "total": 2400,
-        "id": "mnopqrstabcd-9876-ijkl-mnopqrstabcd-ijkl",
-        "gst": 15,
-        "specialCode": "RS123"
-      },
-      {
-        "name": "Fitness Tracker",
-        "quantity": 1,
-        "price": 800,
-        "total": 800,
-        "id": "qrstabcd-ijklmnop-9876-ijklmnop-qrst",
-        "gst": 10,
-        "specialCode": "FT456"
+        "total": 1200,
+        "id": "d3e4f5g6-ef28-44fc-81fc-1dafb5c33d9b",
+        "gst": 18,
+        "specialCode": "LAPTOP123"
       }
     ],
-    "total": 3200,
-    "amountPaid": 800,
-    "leftToPay": 2400,
-    "otherDetails": "Details for Invoice DEF456",
-    "discount": 200
-  },
-  {
-    "id": "GHI789",
-    "createdAt": "2024-03-22",
-    "deliveryDate": "2024-03-28",
-    "invoiceDate": "2024-03-22",
-    "clientName": "Sophie Turner",
-    "clientEmail": "sophie.turner@example.com",
-    "clientPhone": 8765432109,
-    "status": "paid",
-    "vendorDetails": {
-      "name": "Gourmet Delights",
-      "outlet": "Culinary Corner",
-      "postCode": 890123
-    },
-    "clientAddress": {
-      "street": "Tasty Avenue",
-      "postCode": 890123,
-      "city": "Foodville"
-    },
-    "items": [
-      {
-        "name": "Chef's Knife Set",
-        "quantity": 1,
-        "price": 1800,
-        "total": 1800,
-        "id": "uvwxyzabcd-5678-ijklmnop-uvwxyzabcd-ijkl",
-        "gst": 12,
-        "specialCode": "CKS789"
-      },
-      {
-        "name": "Premium Olive Oil",
-        "quantity": 3,
-        "price": 500,
-        "total": 1500,
-        "id": "abcd-ijklmnop-5678-ijklmnop-uvwxyz",
-        "gst": 5,
-        "specialCode": "POO123"
-      }
-    ],
-    "total": 3300,
-    "amountPaid": 3300,
-    "leftToPay": 0,
-    "otherDetails": "Details for Invoice GHI789",
-    "discount": 0
-  },
-  {
-    "id": "JKL012",
-    "createdAt": "2024-03-25",
-    "deliveryDate": "2024-03-30",
-    "invoiceDate": "2024-03-25",
-    "clientName": "David Williams",
-    "clientEmail": "david.williams@example.com",
-    "clientPhone": 7654321098,
-    "status": "pending",
-    "vendorDetails": {
-      "name": "Book Haven",
-      "outlet": "Literary Lounge",
-      "postCode": 901234
-    },
-    "clientAddress": {
-      "street": "Novel Street",
-      "postCode": 901234,
-      "city": "Booktown"
-    },
-    "items": [
-      {
-        "name": "Classic Novels Collection",
-        "quantity": 1,
-        "price": 2500,
-        "total": 2500,
-        "id": "ijklmnop-qrst-5678-qrst-ijklmnopabcd",
-        "gst": 8,
-        "specialCode": "CNC456"
-      },
-      {
-        "name": "Reading Glasses",
-        "quantity": 2,
-        "price": 300,
-        "total": 600,
-        "id": "mnop-qrst-ijklmnopabcd-5678-qrst",
-        "gst": 5,
-        "specialCode": "RG789"
-      }
-    ],
-    "total": 3100,
-    "amountPaid": 1000,
-    "leftToPay": 2100,
-    "otherDetails": "Details for Invoice JKL012",
-    "discount": 400
+    "createdAt": "2024-03-13",
+    "total": 1850,
+    "customId": "OR-TP-3-9",
+    "id": "2b3c4d5e-ca41-465f-88ee-e47532ba1fe0",
+    "leftToPay": 1550,
+    "status": "pending"
   }
 ]

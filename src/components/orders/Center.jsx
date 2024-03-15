@@ -14,16 +14,16 @@ function Center() {
   const location = useLocation()
   const controls = useAnimation()
   const dispatch = useDispatch()
-  const filter = ['paid', 'pending', 'draft']
+  const filter = ['delivered', 'pending']
   const [isDropdown, setIsDropdown] = useState(false)
   const [openCreateOrders, setOpenCreateOrders] = useState(false)
 
   const [filterValue, setfilterValue] = useState('')
 
-  const orders = useSelector((state) => state.orders.filteredInvoice)
+  const orders = useSelector((state) => state.orders.filteredOrder)
 
   useEffect(() => {
-    dispatch(orderSlipSlice.actions.filterInvoice({ status: filterValue }))
+    dispatch(orderSlipSlice.actions.filterOrder({ status: filterValue }))
   }, [filterValue, dispatch])
 
   useEffect(() => {
@@ -151,7 +151,7 @@ function Center() {
               >
                 <img src={plus} alt="" />
                 <p className=" md:block hidden text-white font-semibold text-lg">
-                  New invoice
+                  New order
                 </p>
                 <p className=" md:hidden block text-white font-semibold text-base">
                   New
@@ -163,9 +163,9 @@ function Center() {
           {/* Invoice Cards */}
 
           <div className=" mt-10   space-y-4">
-            {orders.map((invoice, index) => (
+            {orders.map((order, index) => (
               <motion.div
-                key={invoice.id}
+                key={order.customId}
                 initial={{ opacity: 0, y: -50 }}
                 animate={{
                   opacity: 1,
@@ -175,7 +175,7 @@ function Center() {
                 exit={{ opacity: 0, y: 50 }}
                 transition={{ duration: 0.5 }}
               >
-                <OrderCard invoice={invoice} />
+                <OrderCard order={order} />
               </motion.div>
             ))}
           </div>

@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
-import PaidStatus from './PaidStatus'
+import DeliveryStatus from './DeliveryStatus'
 import rightArrow from '../../assets/icon-arrow-right.svg'
 
-function OrderCard({ invoice }) {
+function OrderCard({ order }) {
   return (
     <Link
-      to={`invoice?${invoice.id}`}
+      to={`order?${order.customId}`}
     >
       {/* Big Screen  */}
       <div className=" hidden md:flex cursor-pointer duration-100  ease-in-out  hover:border border-purple-500 py-4 shadow-sm px-6 dark:bg-[#1E2139] bg-white rounded-lg  items-center justify-between">
@@ -14,17 +14,17 @@ function OrderCard({ invoice }) {
             <span className=" text-[#7e88c3]">
               #
             </span>
-            {invoice.id}
+            {order.customId}
           </h2>
 
           <h2 className=" text-sm text-gray-400 font-light ml-6">
             Delivery
             {' '}
-            {invoice.deliveryDate}
+            {order.deliveryDate}
           </h2>
 
           <h2 className=" text-sm text-gray-400 font-light ml-10">
-            {invoice.clientName}
+            {order.clientName}
           </h2>
 
         </div>
@@ -34,10 +34,10 @@ function OrderCard({ invoice }) {
           <h1 className=" text-xl mr-8  dark:text-white">
             ₹
             {' '}
-            {invoice.total}
+            {order.total}
           </h1>
 
-          <PaidStatus type={invoice.status} />
+          <DeliveryStatus type={order.status} />
 
           <img src={rightArrow} className=" ml-4" alt="rightArrow" />
 
@@ -53,27 +53,27 @@ function OrderCard({ invoice }) {
             <span className=" text-[#7e88c3]">
               #
             </span>
-            {invoice.id}
+            {order.id}
           </h2>
 
           <h2 className=" text-sm text-gray-400 font-light mt-3 ">
             Due
             {' '}
-            {invoice.paymentDue}
+            {order.paymentDue}
           </h2>
           <h1 className=" text-xl  dark:text-white">
             ₹
             {' '}
-            {invoice.total}
+            {order.total}
           </h1>
         </div>
 
         <div className=" flex   flex-col">
           <h2 className=" text-sm mb-4 text-gray-400 font-light  text-right  ">
-            {invoice.clientName}
+            {order.clientName}
           </h2>
 
-          <PaidStatus type={invoice.status} />
+          <DeliveryStatus type={order.status} />
 
         </div>
       </div>

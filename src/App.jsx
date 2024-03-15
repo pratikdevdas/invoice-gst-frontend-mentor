@@ -26,7 +26,7 @@ function App() {
           <Route element={<Dashboard />} path="/dashboard">
             <Route element={<Products />} path="products" />
             <Route element={<LiveInvoice />} path="live" />
-            <Route element={<OrderInfo onDelete={onDelete} />} path="invoice" />
+            <Route element={<OrderInfo onDelete={onDelete} />} path="order" />
           </Route>
           <Route element={<Login />} path="/" />
         </Routes>

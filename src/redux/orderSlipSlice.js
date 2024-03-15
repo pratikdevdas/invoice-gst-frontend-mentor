@@ -1,8 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import moment from 'moment'
+import { v4 as uuid4 } from 'uuid'
 import data from '../assets/data/data.json'
-import generateID from '../functions/generateId'
+import { generateSerialNumber } from '../utils/functions'
 
 const today = moment().format('YYYY-MM-DD')
 
@@ -10,94 +11,66 @@ const orderSlipSlice = createSlice({
   name: 'orders',
 
   initialState: {
-    allInvoice: data,
-    filteredInvoice: [],
-    invoiceById: null,
+    allOrder: data,
+    filteredOrder: [],
+    orderById: null,
   },
 
   reducers: {
-    filterInvoice: (state, action) => {
-      const { allInvoice } = state
+    filterOrder: (state, action) => {
+      const { allOrder } = state
       if (action.payload.status === '') {
-        state.filteredInvoice = allInvoice
+        state.filteredOrder = allOrder
       } else {
-        const filteredData = allInvoice.filter(
-          (invoice) => invoice.status === action.payload.status,
+        const filteredData = allOrder.filter(
+          (order) => order.status === action.payload.status,
         )
-        state.filteredInvoice = filteredData
+        state.filteredOrder = filteredData
       }
     },
-    getInvoiceById: (state, action) => {
-      const { allInvoice } = state
-      const invoice = allInvoice.find((item) => item.id === action.payload.id)
-      state.invoiceById = invoice
-    },
-    deleteInvoice: (state, action) => {
-      const { allInvoice } = state
-      const index = allInvoice.findIndex(
-        (invoice) => invoice.id === action.payload.id,
+    deleteOrder: (state, action) => {
+      const { allOrder } = state
+      const index = allOrder.findIndex(
+        (order) => order.id === action.payload.id,
       )
       if (index !== -1) {
-        allInvoice.splice(index, 1)
+        allOrder.splice(index, 1)
       }
     },
-    updateInvoiceStatus: (state, action) => {
+    updateOrderStatus: (state, action) => {
       const { id, status } = action.payload
-      const invoiceToUpdate = state.allInvoice.find(
-        (invoice) => invoice.id === id,
+      const orderToUpdate = state.allOrder.find((order) => order.customId === id)
+      if (orderToUpdate) {
+        orderToUpdate.status = status
+      }
+    },
+    getOrderById: (state, action) => {
+      const { allOrder } = state
+      const order = allOrder.find(
+        (item) => String(item.customId) === String(action.payload.id),
       )
-      if (invoiceToUpdate) {
-        invoiceToUpdate.status = status
-      }
+      state.orderById = order
     },
-    addInvoice: (state, action) => {
+    addOrder: (state, action) => {
       const {
-        vendorName,
-        outlet,
-        vendorPostCode,
-        clientName,
-        clientEmail,
-        clientPhone,
-        deliveryDate,
-        clientAddress,
-        clientPostCode,
-        clientCity,
-        otherDetails,
-        advancePayment,
-        discount,
-        item,
+        items, advancePayment, discount, outlet,
       } = action.payload
-
-      const finalData = {
-        id: `${generateID()}`,
+      const finalObject = {
+        ...action.payload,
         createdAt: today,
-        deliveryDate,
-        invoiceDate: today,
-        clientName,
-        clientEmail,
-        clientPhone,
+        total: items.reduce((acc, i) => acc + Number(i.total), 0),
+        customId: generateSerialNumber(state, outlet),
+        id: uuid4(),
+        leftToPay:
+          items.reduce((acc, i) => acc + Number(i.total), 0)
+          - advancePayment
+          - discount,
         status: 'pending',
-        billerDetails: {
-          billerName: vendorName,
-          billerOutlet: outlet,
-          billerPinCode: vendorPostCode,
-        },
-        clientAddress: {
-          street: clientAddress,
-          postCode: clientPostCode,
-          city: clientCity,
-        },
-        items: item,
-        total: item.reduce((acc, i) => acc + Number(i.total), 0),
-        amountPaid: advancePayment,
-        leftToPay: item.reduce((acc, i) => acc + Number(i.total), 0) - advancePayment - discount,
-        otherDetails,
-        discount,
       }
-      state.allInvoice.push(finalData)
+      state.allOrder.push(finalObject)
     },
-    editInvoice: (state, action) => {
-      const { allInvoice } = state
+    editOrder: (state, action) => {
+      const { allOrder } = state
       const {
         description,
         paymentTerms,
@@ -115,7 +88,7 @@ const orderSlipSlice = createSlice({
         id,
       } = action.payload
 
-      const invoiceIndex = allInvoice.findIndex((invoice) => invoice.id === id)
+      const orderIndex = allOrder.findIndex((order) => order.id === id)
       const edittedObject = {
         description,
         paymentTerms,
@@ -137,9 +110,9 @@ const orderSlipSlice = createSlice({
         total: item.reduce((acc, i) => acc + Number(i.total), 0),
       }
 
-      if (invoiceIndex !== -1) {
-        allInvoice[invoiceIndex] = {
-          ...allInvoice[invoiceIndex],
+      if (orderIndex !== -1) {
+        allOrder[orderIndex] = {
+          ...allOrder[orderIndex],
           ...edittedObject,
         }
       }

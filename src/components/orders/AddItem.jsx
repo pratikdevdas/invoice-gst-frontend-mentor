@@ -7,7 +7,7 @@ import { useState } from 'react'
 // import productSlice from '../../redux/productSlice'
 
 function AddItem({
-  itemDetails, onDelete, setItem,
+  itemDetails, onDelete, setItems,
 }) {
   const products = useSelector((state) => state.products.allProducts)
   const [input, setInput] = useState('')
@@ -47,7 +47,7 @@ function AddItem({
                 value={quantity}
                 onChange={(e) => {
                   setQuantity(e.target.value)
-                  setItem((state) => state.map((item) => (item.id === itemDetails.id
+                  setItems((state) => state.map((item) => (item.id === itemDetails.id
                     ? { ...item, quantity: e.target.value, total: e.target.value * value.sellingPrice }
                     : item)))
                 }}
@@ -81,13 +81,13 @@ function AddItem({
                       .filter((p) => p.productName
                         .toLowerCase()
                         .includes(input.toLowerCase()))
-                      .map((p, i) => (
+                      .map((p) => (
                         <li
                           className="list-none pt-2 py-2 px-4 hover:cursor-pointer  hover:bg-purple-600"
-                          key={i}
+                          key={p.id}
                           onClick={() => {
                             setValue(p)
-                            setItem((state) => state.map((item) => (item.id === itemDetails.id
+                            setItems((state) => state.map((item) => (item.id === itemDetails.id
                               ? {
                                 ...item,
                                 name: p.productName,
