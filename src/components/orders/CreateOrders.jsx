@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import AddItem from './AddItem'
-import invoiceSlice from '../../redux/invoiceSlice'
+import orderSlipSlice from '../../redux/orderSlipSlice'
 import { CustomField } from '../utils/Fields'
 // import {
 //   validateItemCount,
@@ -18,9 +18,9 @@ import { CustomField } from '../utils/Fields'
 // } from '../../functions/createInvoiceValidator'
 import { invoiceValidation } from '../../utils/validationSchema'
 
-function CreateInvoice({
+function CreateOrders({
   // openCreateInvoice,
-  setOpenCreateInvoice,
+  setOpenCreateOrders,
   // invoice,
   type,
 }) {
@@ -52,82 +52,6 @@ function CreateInvoice({
     setItem(data)
   }
 
-  // const onSubmit = () => {
-  //   if (type === 'edit') {
-  //     dispatch(
-  //       invoiceSlice.actions.editInvoice({
-  //         description,
-  //         paymentTerms,
-  //         clientName,
-  //         clientEmail,
-  //         senderStreet,
-  //         senderCity,
-  //         senderPostCode,
-  //         senderCountry,
-  //         clientStreet,
-  //         clientCity,
-  //         clientPostCode,
-  //         clientCountry,
-  //         item,
-  //         id: invoice.id,
-  //       }),
-  //     )
-  //     setOpenCreateInvoice(false)
-  //   } else {
-  //     dispatch(
-  //       invoiceSlice.actions.addInvoice({
-  //         description,
-  //         paymentTerms,
-  //         clientName,
-  //         clientEmail,
-  //         senderStreet,
-  //         senderCity,
-  //         senderPostCode,
-  //         senderCountry,
-  //         clientStreet,
-  //         clientCity,
-  //         clientPostCode,
-  //         clientCountry,
-  //         item,
-  //       }),
-  //     )
-  //     dispatch(invoiceSlice.actions.filterInvoice({ status: filterValue }))
-  //   }
-  // }
-
-  // if (type === 'edit' && isFirstLoad) {
-  //   const updatedItemsArray = invoice.items.map((obj, index) => ({
-  //     ...obj,
-  //     id: index + 1,
-  //   }))
-
-  //   setClientName(invoice.clientName)
-  //   setClientCity(invoice.clientAddress.city)
-  //   setClientStreet(invoice.clientAddress.street)
-  //   setClientPostCode(invoice.clientAddress.postCode)
-  //   setClientCountry(invoice.clientAddress.country)
-  //   setClientEmail(invoice.clientEmail)
-  //   setpaymentTerms(invoice.paymentTerms)
-  //   setDescription(invoice.description)
-  //   setSenderCity(invoice.senderAddress.city)
-  //   setSenderStreet(invoice.senderAddress.street)
-  //   setSenderCountry(invoice.senderAddress.country)
-  //   setSenderPostCode(invoice.senderAddress.postCode)
-  //   setItem(updatedItemsArray)
-
-  //   setIsFirstLoad(false)
-  // }
-
-  // function itemsValidator() {
-  //   const itemName = item.map((i) => validateItemName(i.name))
-  //   const itemCount = item.map((i) => validateItemCount(i.quantity))
-  //   const itemPrice = item.map((i) => validateItemPrice(i.price))
-
-  //   const allItemsElement = itemCount.concat(itemPrice, itemName)
-
-  //   return allItemsElement.includes(false) !== true
-  // }
-
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
@@ -135,7 +59,7 @@ function CreateInvoice({
         if (e.target !== e.currentTarget) {
           return
         }
-        setOpenCreateInvoice(false)
+        setOpenCreateOrders(false)
       }}
       className="  fixed top-0 bottom-0 left-0 right-0  bg-[#000005be]"
     >
@@ -172,6 +96,7 @@ function CreateInvoice({
               clientAddress: '',
               clientCity: '',
               clientPostCode: '',
+              clientGST: '',
               invoiceDate: '',
               deliveryDate: '',
               otherDetails: '',
@@ -182,11 +107,10 @@ function CreateInvoice({
               console.log(values, 'submitted')
               setTimeout(() => {
                 alert(values)
-                dispatch(invoiceSlice.actions.addInvoice({ ...values, item }))
-                dispatch(invoiceSlice.actions.filterInvoice({ status: '' }))
-
+                dispatch(orderSlipSlice.actions.addInvoice({ ...values, item }))
+                dispatch(orderSlipSlice.actions.filterInvoice({ status: '' }))
                 console.log(values, 'submitted')
-                setOpenCreateInvoice(false)
+                setOpenCreateOrders(false)
                 setSubmitting(false)
               }, 400)
             }}
@@ -352,7 +276,7 @@ function CreateInvoice({
                 <div>
                   <button
                     onClick={() => {
-                      setOpenCreateInvoice(false)
+                      setOpenCreateOrders(false)
                     }}
                     className=" bg-gray-200  hover:opacity-80 mx-auto py-4 items-center dark:text-white  dark:bg-[#252945] justify-center  px-8 rounded-full "
                   >
@@ -377,4 +301,4 @@ function CreateInvoice({
   )
 }
 
-export default CreateInvoice
+export default CreateOrders

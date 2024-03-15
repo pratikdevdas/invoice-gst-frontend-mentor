@@ -7,9 +7,9 @@ import PaidStatus from './PaidStatus'
 import invoiceSlice from '../../redux/invoiceSlice'
 import formatDate from '../../functions/formatDate'
 import DeleteModal from './DeleteModal'
-import CreateInvoice from './CreateInvoice'
+import CreateOrders from './CreateOrders'
 
-function InvoiceInfo({ onDelete }) {
+function OrderInfo({ onDelete }) {
   const navigate = useNavigate()
   const location = useLocation()
   const dispatch = useDispatch()
@@ -272,10 +272,10 @@ function InvoiceInfo({ onDelete }) {
       )}
       <AnimatePresence>
         {isEditOpen && (
-          <CreateInvoice
+          <CreateOrders
             invoice={invoice}
             type="edit"
-            setOpenCreateInvoice={setIsEditOpen}
+            setOpenCreateOrders={setIsEditOpen}
           />
         )}
       </AnimatePresence>
@@ -283,4 +283,4 @@ function InvoiceInfo({ onDelete }) {
   )
 }
 
-export default InvoiceInfo
+export default OrderInfo

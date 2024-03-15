@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import arrowDown from '../../assets/icon-arrow-down.svg'
 import plus from '../../assets/plus.png'
-import InvoiceCard from './InvoiceCard'
-import invoiceSlice from '../../redux/invoiceSlice'
-import CreateInvoice from './CreateInvoice'
+import OrderCard from './OrderCard'
+import orderSlipSlice from '../../redux/orderSlipSlice'
+import CreateOrders from './CreateOrders'
 import Header from '../Header'
 
 function Center() {
@@ -16,14 +16,14 @@ function Center() {
   const dispatch = useDispatch()
   const filter = ['paid', 'pending', 'draft']
   const [isDropdown, setIsDropdown] = useState(false)
-  const [openCreateInvoice, setOpenCreateInvoice] = useState(false)
+  const [openCreateOrders, setOpenCreateOrders] = useState(false)
 
   const [filterValue, setfilterValue] = useState('')
 
-  const invoices = useSelector((state) => state.invoices.filteredInvoice)
+  const orders = useSelector((state) => state.orders.filteredInvoice)
 
   useEffect(() => {
-    dispatch(invoiceSlice.actions.filterInvoice({ status: filterValue }))
+    dispatch(orderSlipSlice.actions.filterInvoice({ status: filterValue }))
   }, [filterValue, dispatch])
 
   useEffect(() => {
@@ -74,13 +74,13 @@ function Center() {
           <div className=" min-w-full max-h-[64px] flex items-center justify-between">
             <div>
               <h1 className=" lg:text-4xl md:text-2xl  text-xl  dark:text-white tracking-wide font-semibold">
-                Invoices
+                Order Slips
               </h1>
               <p className=" text-gray-500 font-light">
                 There are
-                {invoices.length}
+                {orders.length}
                 {' '}
-                total invoices.
+                total orders.
               </p>
             </div>
 
@@ -146,7 +146,7 @@ function Center() {
 
               <button
                 type="button"
-                onClick={() => setOpenCreateInvoice(true)}
+                onClick={() => setOpenCreateOrders(true)}
                 className=" hover:opacity-80 ml-4 md:ml-10 flex items-center py-2 px-2 md:space-x-3 space-x-2 bg-[#7c5dfa] rounded-full"
               >
                 <img src={plus} alt="" />
@@ -163,7 +163,7 @@ function Center() {
           {/* Invoice Cards */}
 
           <div className=" mt-10   space-y-4">
-            {invoices.map((invoice, index) => (
+            {orders.map((invoice, index) => (
               <motion.div
                 key={invoice.id}
                 initial={{ opacity: 0, y: -50 }}
@@ -175,17 +175,17 @@ function Center() {
                 exit={{ opacity: 0, y: 50 }}
                 transition={{ duration: 0.5 }}
               >
-                <InvoiceCard invoice={invoice} />
+                <OrderCard invoice={invoice} />
               </motion.div>
             ))}
           </div>
         </motion.div>
       </div>
       <AnimatePresence>
-        {openCreateInvoice && (
-          <CreateInvoice
-            openCreateInvoice={openCreateInvoice}
-            setOpenCreateInvoice={setOpenCreateInvoice}
+        {openCreateOrders && (
+          <CreateOrders
+            openCreateOrders={openCreateOrders}
+            setOpenCreateOrders={setOpenCreateOrders}
           />
         )}
       </AnimatePresence>

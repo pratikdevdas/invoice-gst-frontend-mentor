@@ -3,7 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 // import Center from './components/invoices/Center'
 // import Header from './components/Header'
-import InvoiceInfo from './components/invoices/InvoiceInfo'
+import OrderInfo from './components/orders/OrderInfo'
 import invoiceSlice from './redux/invoiceSlice'
 import Products from './components/products/Products'
 import Login from './components/Login'
@@ -26,7 +26,7 @@ function App() {
           <Route element={<Dashboard />} path="/dashboard">
             <Route element={<Products />} path="products" />
             <Route element={<LiveInvoice />} path="live" />
-            <Route element={<InvoiceInfo onDelete={onDelete} />} path="invoice" />
+            <Route element={<OrderInfo onDelete={onDelete} />} path="invoice" />
           </Route>
           <Route element={<Login />} path="/" />
         </Routes>

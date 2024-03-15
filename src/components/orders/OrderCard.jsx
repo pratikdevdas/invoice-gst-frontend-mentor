@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import PaidStatus from './PaidStatus'
 import rightArrow from '../../assets/icon-arrow-right.svg'
 
-function InvoiceCard({ invoice }) {
+function OrderCard({ invoice }) {
   return (
     <Link
       to={`invoice?${invoice.id}`}
@@ -81,4 +81,4 @@ function InvoiceCard({ invoice }) {
   )
 }
 
-export default InvoiceCard
+export default OrderCard
