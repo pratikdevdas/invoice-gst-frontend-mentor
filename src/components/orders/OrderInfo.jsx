@@ -92,7 +92,7 @@ function OrderInfo({ onDelete }) {
               </div>
             </div>
 
-            <div className=" mt-4 rounded-lg w-full  px-6 py-6 bg-white dark:bg-[#1e2139]">
+            <div className=" mt-4 rounded-lg w-full  px-6 py-6 print:bg-white dark:bg-[#1e2139]">
               <div className=" flex flex-col md:flex-row items-start justify-between w-full ">
                 <div className=" mt-4 md:mt-0 text-left text-gray-400 text-sm md:text-right flex flex-col items-center">
                   <h1 className=" font-semibold dark:text-white text-lg">

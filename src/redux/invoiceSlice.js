@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import moment from 'moment'
-import data from '../assets/data/data.json'
 import generateID from '../functions/generateId'
 
 const today = moment().format('YYYY-MM-DD')
@@ -10,7 +9,7 @@ const invoiceSlice = createSlice({
   name: 'invoices',
 
   initialState: {
-    allInvoice: data,
+    allInvoice: [],
     filteredInvoice: [],
     invoiceById: null,
   },

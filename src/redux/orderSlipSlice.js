@@ -2,7 +2,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import moment from 'moment'
 import { v4 as uuid4 } from 'uuid'
-import data from '../assets/data/data.json'
 import { generateSerialNumber } from '../utils/functions'
 
 const today = moment().format('YYYY-MM-DD')
@@ -11,7 +10,7 @@ const orderSlipSlice = createSlice({
   name: 'orders',
 
   initialState: {
-    allOrder: data,
+    allOrder: [],
     filteredOrder: [],
     orderById: null,
   },
@@ -92,7 +91,12 @@ const orderSlipSlice = createSlice({
         }
       }
     },
+    setOrders: (state, action) => {
+      state.allOrder = action.payload
+      state.filteredOrder = action.payload
+    },
   },
 })
 
+export const { addOrder, editOrder, setOrders } = orderSlipSlice.actions
 export default orderSlipSlice

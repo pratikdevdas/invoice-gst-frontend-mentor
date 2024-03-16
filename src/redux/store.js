@@ -1,7 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
 import invoiceSlice from './invoiceSlice'
 import productSlice from './productSlice'
-import orderSlipSlice from './orderSlipSlice'
+import orderSlipSlice, { setOrders } from './orderSlipSlice'
+import orderService from '../server/orderSlip'
 
 const store = configureStore({
   reducer: {
@@ -10,5 +11,7 @@ const store = configureStore({
     orders: orderSlipSlice.reducer,
   },
 })
+
+orderService.getAll().then((orderSlips) => store.dispatch(setOrders(orderSlips)))
 
 export default store
