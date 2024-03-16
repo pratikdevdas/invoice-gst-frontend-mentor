@@ -54,7 +54,7 @@ const orderSlipSlice = createSlice({
     appendOrder: (state, action) => {
       state.allOrder.push(action.payload)
     },
-    updateEditOrder: (state, action) => {
+    editOrder: (state, action) => {
       const { allOrder } = state
       const {
         id, items, advancePayment, discount,
