@@ -5,6 +5,8 @@ export const generateSerialNumber = (state, outlet) => {
   return `OR-${outlet.substring(0, 4).toUpperCase()}-${outletCount}-${totalCount}`
 }
 
-export const generateLeftToPay = (items, advancePayment, discount) => items.reduce((acc, i) => acc + Number(i.total), 0)
-  - advancePayment
-  - discount
+export function formatDate(dateString) {
+  const date = new Date(dateString)
+  const options = { year: 'numeric', month: 'short', day: 'numeric' }
+  return date.toLocaleString('en-US', options)
+}

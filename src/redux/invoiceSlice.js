@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import moment from 'moment'
-import generateID from '../functions/generateId'
 
 const today = moment().format('YYYY-MM-DD')
 
@@ -68,7 +67,7 @@ const invoiceSlice = createSlice({
       } = action.payload
 
       const finalData = {
-        id: `${generateID()}`,
+        id: 'dsfsd',
         createdAt: today,
         deliveryDate,
         invoiceDate: today,

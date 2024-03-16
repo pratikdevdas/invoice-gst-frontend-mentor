@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import leftArrow from '../../assets/icon-arrow-left.svg'
 import DeliveryStatus from './DeliveryStatus'
 import orderSlipSlice from '../../redux/orderSlipSlice'
-import formatDate from '../../functions/formatDate'
 import DeleteModal from './DeleteModal'
 import CreateOrders from './CreateOrders'
+import formatDate from '../../utils/functions'
 
 function OrderInfo({ onDelete }) {
   const navigate = useNavigate()
