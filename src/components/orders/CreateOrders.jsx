@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { useDispatch } from 'react-redux'
 import { Formik, Form } from 'formik'
 import AddItem from './AddItem'
-import orderSlipSlice from '../../redux/orderSlipSlice'
+import orderSlipSlice, { addOrder } from '../../redux/orderSlipSlice'
 import { CustomField, OutletDropDown } from '../Fields'
 import { invoiceValidation } from '../../utils/validationSchema'
 
@@ -116,7 +116,7 @@ function CreateOrders({
               }
               return setTimeout(() => {
                 alert(values)
-                dispatch(orderSlipSlice.actions.addOrder({ ...values, items }))
+                dispatch(addOrder({ ...values, items }))
                 dispatch(orderSlipSlice.actions.filterOrder({ status: '' }))
                 setOpenCreateOrders(false)
                 setSubmitting(false)

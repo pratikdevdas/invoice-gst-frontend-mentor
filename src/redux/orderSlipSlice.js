@@ -3,8 +3,9 @@ import { createSlice } from '@reduxjs/toolkit'
 import moment from 'moment'
 import { v4 as uuid4 } from 'uuid'
 import { generateSerialNumber } from '../utils/functions'
+import orderService from '../server/orderSlip'
 
-const today = moment().format('YYYY-MM-DD')
+const today = moment().format('YYYY-MM-DD, h:mm:ss a')
 
 const orderSlipSlice = createSlice({
   name: 'orders',
@@ -50,25 +51,10 @@ const orderSlipSlice = createSlice({
       )
       state.orderById = order
     },
-    addOrder: (state, action) => {
-      const {
-        items, advancePayment, discount, outlet,
-      } = action.payload
-      const finalObject = {
-        ...action.payload,
-        createdAt: today,
-        total: items.reduce((acc, i) => acc + Number(i.total), 0),
-        customId: generateSerialNumber(state, outlet),
-        id: uuid4(),
-        leftToPay:
-          items.reduce((acc, i) => acc + Number(i.total), 0)
-          - advancePayment
-          - discount,
-        status: 'pending',
-      }
-      state.allOrder.push(finalObject)
+    appendOrder: (state, action) => {
+      state.allOrder.push(action.payload)
     },
-    editOrder: (state, action) => {
+    updateEditOrder: (state, action) => {
       const { allOrder } = state
       const {
         id, items, advancePayment, discount,
@@ -98,5 +84,47 @@ const orderSlipSlice = createSlice({
   },
 })
 
-export const { addOrder, editOrder, setOrders } = orderSlipSlice.actions
+export const {
+  appendOrder, updateEditOrder, setOrders, filterOrder,
+} = orderSlipSlice.actions
+
+// thunks: these are the functions that are used to make async calls via action creators
+export const addOrder = (orderData) => async (dispatch, getState) => {
+  const {
+    items, advancePayment, discount, outlet,
+  } = orderData
+  const total = items.reduce((acc, item) => acc + Number(item.total), 0)
+  const customId = generateSerialNumber(getState().orders, outlet)
+  const leftToPay = total - advancePayment - discount
+  const finalObject = {
+    ...orderData,
+    createdAt: today,
+    total,
+    customId,
+    id: uuid4(),
+    leftToPay,
+    status: 'pending',
+  }
+
+  const newOrder = await orderService.createNew(finalObject)
+  dispatch(appendOrder(newOrder))
+  dispatch(filterOrder({ status: '' }))
+}
+
+// export const editOrder = (editedOrder) => async (dispatch) => {
+//   const { items, advancePayment, discount } = editedOrder;
+//   const total = items.reduce((acc, item) => acc + Number(item.total), 0);
+//   const leftToPay = total - advancePayment - discount;
+//   const editedAt = moment().format('MMMM Do YYYY, h:mm:ss a');
+
+//   const updatedOrder = {
+//     ...editedOrder,
+//     leftToPay,
+//     total,
+//     editedAt,
+//   };
+
+//   dispatch(editOrderSuccess(updatedOrder));
+// };
+
 export default orderSlipSlice
