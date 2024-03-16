@@ -7,7 +7,7 @@ import DeliveryStatus from './DeliveryStatus'
 import orderSlipSlice from '../../redux/orderSlipSlice'
 import DeleteModal from './DeleteModal'
 import CreateOrders from './CreateOrders'
-import formatDate from '../../utils/functions'
+import { formatDate } from '../../utils/functions'
 
 function OrderInfo({ onDelete }) {
   const navigate = useNavigate()
