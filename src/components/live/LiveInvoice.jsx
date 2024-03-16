@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
 // import AddItemToLiveInvoice from './AddItemToLiveInvoice'
 import { invoiceValidation } from '../../utils/validationSchema'
-import { LiveField, LiveNumber } from '../utils/Fields'
+import { LiveField, LiveNumber } from '../Fields'
 import invoiceSlice from '../../redux/invoiceSlice'
 // import generateID from '../../functions/generateId'
 function LiveInvoice() {

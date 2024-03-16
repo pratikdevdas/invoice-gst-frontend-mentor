@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux'
 import { Formik, Form } from 'formik'
 import AddItem from './AddItem'
 import orderSlipSlice from '../../redux/orderSlipSlice'
-import { CustomField, OutletDropDown } from '../utils/Fields'
+import { CustomField, OutletDropDown } from '../Fields'
 import { invoiceValidation } from '../../utils/validationSchema'
 
 function CreateOrders({
