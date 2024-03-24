@@ -7,8 +7,13 @@ const getAll = async () => {
   return response.data
 }
 
-const createNew = async (content) => {
-  const response = await axios.post(baseUrl, content)
+const createNew = async (content, token) => {
+  const response = await axios.post(baseUrl, content, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
   return response.data
 }
 

@@ -106,7 +106,7 @@ export const addOrder = (orderData) => async (dispatch, getState) => {
     status: 'pending',
   }
 
-  const newOrder = await orderService.createNew(finalObject)
+  const newOrder = await orderService.createNew(finalObject, getState().auth.token)
   dispatch(appendOrder(newOrder))
   dispatch(filterOrder({ status: '' }))
 }
