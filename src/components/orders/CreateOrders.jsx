@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { useDispatch } from 'react-redux'
 import { Formik, Form } from 'formik'
 import AddItem from './AddItem'
-import orderSlipSlice, { addOrder } from '../../redux/orderSlipSlice'
+import { addOrder, editOrder } from '../../redux/orderSlipSlice'
 import { CustomField, OutletDropDown } from '../Fields'
 import { invoiceValidation } from '../../utils/validationSchema'
 
@@ -109,15 +109,13 @@ function CreateOrders({
                 return setSubmitting(false)
               }
               if (type === 'edit') {
-                dispatch(orderSlipSlice.actions.editOrder({ ...values, items, id: order.id }))
-                dispatch(orderSlipSlice.actions.filterOrder({ status: '' }))
+                dispatch(editOrder({ ...values, items, id: order.id }))
                 setOpenCreateOrders(false)
                 return setSubmitting(false)
               }
               return setTimeout(() => {
                 alert(values)
                 dispatch(addOrder({ ...values, items }))
-                dispatch(orderSlipSlice.actions.filterOrder({ status: '' }))
                 setOpenCreateOrders(false)
                 setSubmitting(false)
               }, 400)
@@ -202,13 +200,15 @@ function CreateOrders({
                     </div>
                   )}
 
-                  <div className=" flex flex-col col-span-2">
-                    <CustomField
-                      type="date"
-                      name="deliveryDate"
-                      label="Delivery Date"
-                    />
-                  </div>
+                  {type === 'edit' ? <div className="hidden" /> : (
+                    <div className=" flex flex-col col-span-2">
+                      <CustomField
+                        type="date"
+                        name="deliveryDate"
+                        label="Delivery Date"
+                      />
+                    </div>
+                  )}
                   <div className=" flex flex-col col-span-1  ">
                     <CustomField
                       type="number"

@@ -28,15 +28,6 @@ const orderSlipSlice = createSlice({
         state.filteredOrder = filteredData
       }
     },
-    deleteOrder: (state, action) => {
-      const { allOrder } = state
-      const index = allOrder.findIndex(
-        (order) => order.id === action.payload.id,
-      )
-      if (index !== -1) {
-        allOrder.splice(index, 1)
-      }
-    },
     updateOrderStatus: (state, action) => {
       const { id, status } = action.payload
       const orderToUpdate = state.allOrder.find((order) => order.customId === id)
@@ -54,28 +45,15 @@ const orderSlipSlice = createSlice({
     appendOrder: (state, action) => {
       state.allOrder.push(action.payload)
     },
-    editOrder: (state, action) => {
-      const { allOrder } = state
-      const {
-        id, items, advancePayment, discount,
-      } = action.payload
-      const edittedObject = {
-        ...action.payload,
-        leftToPay:
-        items.reduce((acc, i) => acc + Number(i.total), 0)
-        - advancePayment
-        - discount,
-        total: items.reduce((acc, i) => acc + Number(i.total), 0),
-        editedAt: moment().format('MMMM Do YYYY, h:mm:ss a'),
-      }
-      const orderIndex = allOrder.findIndex((order) => order.id === id)
-
-      if (orderIndex !== -1) {
-        allOrder[orderIndex] = {
-          ...allOrder[orderIndex],
-          ...edittedObject,
-        }
-      }
+    updateEditOrder: (state, action) => {
+      const { id } = action.payload
+      console.log(state)
+      const orderToUpdate = state.find((n) => n.id === id)
+      console.log(orderToUpdate)
+      return state.map((order) => {
+        console.log(order.id !== id ? order : orderToUpdate)
+        return order.id !== id ? order : orderToUpdate
+      })
     },
     setOrders: (state, action) => {
       state.allOrder = action.payload
@@ -111,20 +89,21 @@ export const addOrder = (orderData) => async (dispatch, getState) => {
   dispatch(filterOrder({ status: '' }))
 }
 
-// export const editOrder = (editedOrder) => async (dispatch) => {
-//   const { items, advancePayment, discount } = editedOrder;
-//   const total = items.reduce((acc, item) => acc + Number(item.total), 0);
-//   const leftToPay = total - advancePayment - discount;
-//   const editedAt = moment().format('MMMM Do YYYY, h:mm:ss a');
+export const editOrder = (editedOrder) => async (dispatch, getState) => {
+  const { items, advancePayment, discount } = editedOrder
+  const total = items.reduce((acc, item) => acc + Number(item.total), 0)
+  const leftToPay = total - advancePayment - discount
 
-//   const updatedOrder = {
-//     ...editedOrder,
-//     leftToPay,
-//     total,
-//     editedAt,
-//   };
-
-//   dispatch(editOrderSuccess(updatedOrder));
-// };
+  const updatedOrder = {
+    ...editedOrder,
+    leftToPay,
+    total,
+    editedAt: today,
+  }
+  console.log(updatedOrder)
+  await orderService.updateOrder(updatedOrder.id, updatedOrder, getState().auth.token)
+  dispatch(updateEditOrder(updatedOrder))
+  dispatch(filterOrder({ status: '' }))
+}
 
 export default orderSlipSlice

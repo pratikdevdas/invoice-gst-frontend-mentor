@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import DeliveryStatus from './DeliveryStatus'
 import rightArrow from '../../assets/icon-arrow-right.svg'
+import { formatDate } from '../../utils/functions'
 
 function OrderCard({ order }) {
   return (
@@ -20,7 +21,7 @@ function OrderCard({ order }) {
           <h2 className=" text-sm text-gray-400 font-light ml-6">
             Delivery
             {' '}
-            {order.deliveryDate}
+            {formatDate(order.deliveryDate)}
           </h2>
 
           <h2 className=" text-sm text-gray-400 font-light ml-10">

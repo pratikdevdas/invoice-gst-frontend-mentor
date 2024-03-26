@@ -17,4 +17,14 @@ const createNew = async (content, token) => {
   return response.data
 }
 
-export default { getAll, createNew }
+const updateOrder = async (id, content, token) => {
+  const response = await axios.put(`${baseUrl}/${id}`, content, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  return response.data
+}
+
+export default { getAll, createNew, updateOrder }
